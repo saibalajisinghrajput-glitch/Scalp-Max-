@@ -1,8 +1,13 @@
 <parameter name="content">#!/bin/bash
-echo "Pushing clean code to GitHub main branch..."
-cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+
+echo "Staging all changes..."
 git add .
-git commit -m "Clean commit - removed bloated files"
-git push -u origin main
-echo "Done! Check your GitHub repository."
+
+echo "Committing changes..."
+git commit -m "Update"
+
+echo "Pushing to GitHub..."
+git push origin main
+
+echo "Done! Check https://github.com/saibalajisinghrajput-glitch/Scalp-Max-"
 </parameter>

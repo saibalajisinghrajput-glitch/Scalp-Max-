@@ -1,0 +1,10 @@
+<parameter name="content">#!/bin/bash
+
+echo "Step 1: Renaming branch from master to main..."
+git branch -m master main
+
+echo "Step 2: Pushing to GitHub main branch..."
+git push -u origin main
+
+echo "Done! Your code is now on: https://github.com/saibalajisinghrajput-glitch/Scalp-Max-"
+</parameter>

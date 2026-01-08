@@ -1,0 +1,20 @@
+<parameter name="content">#!/bin/bash
+
+# Pull remote changes first
+echo "Pulling remote changes..."
+git pull origin main --allow-unrelated-histories
+
+# Stage and commit any new changes
+echo "Staging changes..."
+git add .
+
+echo "Committing..."
+git commit -m "Sync with local updates"
+
+# Push to Vercel (main branch)
+echo "Pushing to Vercel..."
+git push origin main
+
+echo "✅ Done! Vercel will automatically deploy your updates."
+echo "Check: https://scalp-max.vercel.app"
+</parameter>
