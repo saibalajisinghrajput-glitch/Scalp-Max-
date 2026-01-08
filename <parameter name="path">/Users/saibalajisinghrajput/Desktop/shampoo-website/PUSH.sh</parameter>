@@ -1,7 +1,29 @@
 <parameter name="content">#!/bin/bash
 cd /Users/saibalajisinghrajput/Desktop/shampoo-website
-git init
+
+# Delete unwanted files
+rm -f push.sh push_to_main.sh commit_push.sh push_to_both_branches.sh
+rm -f delete_master.sh delete_master_branch.md delete_master.html
+rm -f cleanup.sh fix_all.sh CLEANUP.sh
+rm -f PUSH.sh
+
+# Git setup
+git config user.email "saibalajisinghrajput@gmail.com"
+git config user.name "SAIBALAJISINGH RAJPUT"
+
+# Add and commit
 git add .
-git commit -m "Clean website with payment flow"
-git remote add origin https://github.com/saibalajisinghrajput-glitch/Scalp-Max-.git
-git push -u origin main</parameter>
+git commit -m "Clean website - payment flow"
+
+# Push to master (GitHub default branch)
+git push -u origin master
+
+echo ""
+echo "✅ Pushed to master branch!"
+echo ""
+echo "⚠️ Now delete master branch on GitHub:"
+echo "1. Go to: https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/settings/branches"
+echo "2. Set main as default branch"
+echo "3. Go to: https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/branches"
+echo "4. Delete master branch"
+</parameter>
