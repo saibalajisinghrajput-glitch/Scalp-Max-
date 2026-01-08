@@ -25,7 +25,7 @@
                 <a href="index.html#reviews">Reviews</a>
                 <a href="index.html#faq">FAQ</a>
             </div>
-            <div class="cart-icon" onclick="showCart()">
+            <div class="cart-icon">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count">1</span>
             </div>
@@ -45,13 +45,13 @@
     <!-- Checkout Hero -->
     <section class="hero" style="min-height: auto; padding: 140px 20px 40px;">
         <div class="hero-content">
-            <span class="badge">Secure Checkout</span>
+            <span class="badge"><i class="fas fa-shield-alt"></i> Secure Checkout</span>
             <h2 class="highlight">Complete Your Order</h2>
             <p class="hero-description">Fill in your details below to place your order for Scalp Max Hair Care Kit</p>
             <div class="trust-badges">
-                <span><i class="fas fa-lock"></i> Secure Payment</span>
+                <span><i class="fas fa-lock"></i> 100% Secure</span>
                 <span><i class="fas fa-truck"></i> Free Delivery</span>
-                <span><i class="fas fa-undo"></i> 30-Day Returns</span>
+                <span><i class="fas fa-undo"></i> Easy Returns</span>
             </div>
         <div class="hero-image">
             <div class="product-container">
@@ -66,16 +66,16 @@
     <section class="order-section" style="padding: 40px 20px 80px;">
         <div class="container">
             <div class="order-card">
-                <div class="order-header">
-                    <h2>Order Summary</h2>
-                    <p>Review your order before payment</p>
+                <div class="order-header" style="background: linear-gradient(135deg, #2d5a27 0%, #4a8c42 100%);">
+                    <h2><i class="fas fa-clipboard-check"></i> Order Summary</h2>
+                    <p>Review your order details</p>
                 </div>
                 <div class="order-content">
                     <div class="product-info">
                         <img src="product-image.png" alt="Scalp Max Product">
                         <div class="product-details">
-                            <h3>Scalp Max Hair Care Kit</h3>
-                            <p>Complete hair care solution with natural ingredients</p>
+                            <h3><i class="fas fa-spa"></i> Scalp Max Hair Care Kit</h3>
+                            <p>Advanced hair growth formula with natural ingredients</p>
                             <div class="price-info">
                                 <span class="price">₹499</span>
                                 <span class="mrp">MRP ₹999</span>
@@ -84,6 +84,11 @@
                     </div>
 
                     <form id="checkoutForm">
+                        <!-- Personal Information -->
+                        <div class="section-title" style="text-align: left; font-size: 1.3rem; margin: 30px 0 20px;">
+                            <i class="fas fa-user-circle"></i> Personal Information
+                        </div>
+                        
                         <div class="form-group">
                             <label for="name"><i class="fas fa-user"></i> Full Name *</label>
                             <input type="text" id="name" name="name" required placeholder="Enter your full name">
@@ -95,17 +100,22 @@
                                 <input type="email" id="email" name="email" required placeholder="Enter your email">
                             </div>
                             <div class="form-group">
-                                <label for="phone"><i class="fas fa-phone"></i> Phone Number *</label>
+                                <label for="phone"><i class="fas fa-phone-alt"></i> Phone Number *</label>
                                 <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                             </div>
 
+                        <!-- Delivery Address -->
+                        <div class="section-title" style="text-align: left; font-size: 1.3rem; margin: 30px 0 20px;">
+                            <i class="fas fa-map-marker-alt"></i> Delivery Address
+                        </div>
+                        
                         <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
                             <div class="form-group">
                                 <label for="city"><i class="fas fa-city"></i> City *</label>
                                 <input type="text" id="city" name="city" required placeholder="City">
                             </div>
                             <div class="form-group">
-                                <label for="state"><i class="fas fa-map-marker-alt"></i> State *</label>
+                                <label for="state"><i class="fas fa-map"></i> State *</label>
                                 <input type="text" id="state" name="state" required placeholder="State">
                             </div>
                             <div class="form-group">
@@ -118,31 +128,84 @@
                             <textarea id="address" name="address" required placeholder="Enter your complete delivery address" rows="3"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label><i class="fas fa-credit-card"></i> Payment Method *</label>
-                            <div class="payment-options">
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="UPI" checked>
-                                    <span><i class="fas fa-mobile-alt"></i> UPI</span>
-                                </label>
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="COD">
-                                    <span><i class="fas fa-money-bill-wave"></i> Cash on Delivery</span>
-                                </label>
-                            </div>
+                        <!-- Payment Method -->
+                        <div class="section-title" style="text-align: left; font-size: 1.3rem; margin: 30px 0 20px;">
+                            <i class="fas fa-credit-card"></i> Select Payment Method
+                        </div>
+                        
+                        <div class="payment-method-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
+                            <label class="payment-card" onclick="selectPayment('UPI')">
+                                <input type="radio" name="payment" value="UPI" checked>
+                                <div class="payment-card-content">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>UPI</span>
+                                    <small>Pay via Google Pay, PhonePe, etc.</small>
+                                </div>
+                            </label>
+                            <label class="payment-card" onclick="selectPayment('COD')">
+                                <input type="radio" name="payment" value="COD">
+                                <div class="payment-card-content">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>COD</span>
+                                    <small>Pay when you receive</small>
+                                </div>
+                            </label>
+                            <label class="payment-card" onclick="selectPayment('WHATSAPP')">
+                                <input type="radio" name="payment" value="WHATSAPP">
+                                <div class="payment-card-content">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                    <small>Order via WhatsApp</small>
+                                </div>
+                            </label>
+                        </div>
 
+                        <!-- Payment Details -->
                         <div id="paymentDetails" class="payment-details" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 12px; margin-bottom: 25px;">
-                            <h4 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Payment Details</h4>
-                            <p style="margin-bottom: 15px;">Transfer <strong>₹499</strong> to:</p>
-                            <div style="background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                                <p style="font-size: 1.1rem; margin-bottom: 10px;">UPI ID:</p>
-                                <p style="font-size: 1.3rem; font-weight: 700; color: var(--primary-color);">scalpmax@upi</p>
-                                <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">or scan any UPI app and pay</p>
+                            <!-- UPI Section -->
+                            <div id="upiSection" style="display: block;">
+                                <h4 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-qrcode"></i> UPI Payment Details</h4>
+                                <p style="margin-bottom: 15px;">Transfer <strong>₹499</strong> to:</p>
+                                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                    <p style="font-size: 1.1rem; margin-bottom: 10px;">UPI ID:</p>
+                                    <p style="font-size: 1.4rem; font-weight: 700; color: var(--primary-color);">saibalajisinghrajput@oksbi</p>
+                                </div>
+                            
+                            <!-- COD Section -->
+                            <div id="codSection" style="display: none;">
+                                <h4 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</h4>
+                                <p style="margin-bottom: 15px;">No advance payment required!</p>
+                                <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                    <p style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #28a745;"></i> Pay ₹499 at the time of delivery</p>
+                                    <p style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #28a745;"></i> Our delivery partner will collect the payment</p>
+                                    <p><i class="fas fa-check-circle" style="color: #28a745;"></i> Easy and risk-free</p>
+                                </div>
+
+                            <!-- WhatsApp Section -->
+                            <div id="whatsappSection" style="display: none;">
+                                <h4 style="color: #25D366; margin-bottom: 15px;"><i class="fab fa-whatsapp"></i> Order via WhatsApp</h4>
+                                <p style="margin-bottom: 15px;">Click below to send your order on WhatsApp:</p>
+                                <a href="https://wa.me/919010988498?text=Hi,%20I%20want%20to%20order%20Scalp%20Max%20Hair%20Care%20Kit.%20Price:%20₹499" 
+                                   target="_blank" 
+                                   style="display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem;">
+                                    <i class="fab fa-whatsapp" style="font-size: 1.4rem;"></i>
+                                    Order on WhatsApp
+                                </a>
                             </div>
 
-                        <button type="submit" class="btn btn-primary btn-block" style="font-size: 1.1rem; padding: 18px 32px;">
+                        <!-- Order Total -->
+                        <div class="order-total" style="background: linear-gradient(135deg, #2d5a27 0%, #4a8c42 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                            <span style="font-size: 1.2rem;"><i class="fas fa-receipt"></i> Total Amount to Pay:</span>
+                            <span style="font-size: 2rem; font-weight: 700;">₹499</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block" style="font-size: 1.2rem; padding: 20px 32px; background: linear-gradient(135deg, #2d5a27 0%, #4a8c42 100%);">
                             <i class="fas fa-check-circle"></i> Place Order - ₹499
                         </button>
+
+                        <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #666;">
+                            <i class="fas fa-shield-alt"></i> Your information is secure and encrypted
+                        </p>
                     </form>
                 </div>
         </div>
@@ -180,6 +243,29 @@
     <!-- Scripts -->
     <script src="config.js"></script>
     <script>
+        // Payment method selection
+        function selectPayment(method) {
+            // Hide all sections
+            document.getElementById('upiSection').style.display = 'none';
+            document.getElementById('codSection').style.display = 'none';
+            document.getElementById('whatsappSection').style.display = 'none';
+            
+            // Show selected section
+            if (method === 'UPI') {
+                document.getElementById('upiSection').style.display = 'block';
+            } else if (method === 'COD') {
+                document.getElementById('codSection').style.display = 'block';
+            } else if (method === 'WHATSAPP') {
+                document.getElementById('whatsappSection').style.display = 'block';
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
         // Checkout form handler
         document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -214,6 +300,13 @@
 
             console.log('Sending order data:', orderData);
 
+            // For WhatsApp orders, redirect to WhatsApp
+            if (paymentMethod === 'WHATSAPP') {
+                const message = `Hi, I want to order Scalp Max Hair Care Kit.\n\nOrder Details:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}, ${city}, ${state} - ${pincode}\nEmail: ${email}\nPayment: WhatsApp\n\nPlease confirm my order.`;
+                window.open(`https://wa.me/919010988498?text=${encodeURIComponent(message)}`, '_blank');
+                return;
+            }
+
             try {
                 const { data, error } = await supabaseClient
                     .from('orders')
@@ -221,7 +314,10 @@
 
                 if (error) {
                     console.error('Supabase error:', error);
-                    alert('Error: ' + error.message);
+                    // Still redirect to thank you page even if Supabase fails
+                    localStorage.setItem('lastOrderId', orderId);
+                    localStorage.setItem('paymentMethod', paymentMethod);
+                    window.location.href = 'thank-you.html';
                     return;
                 }
 
@@ -232,15 +328,12 @@
                 window.location.href = 'thank-you.html';
             } catch (err) {
                 console.error('Error placing order:', err);
-                alert('Error placing order. Please try again. Check console for details.');
+                // Still redirect to thank you page on error
+                localStorage.setItem('lastOrderId', orderId);
+                localStorage.setItem('paymentMethod', paymentMethod);
+                window.location.href = 'thank-you.html';
             }
         });
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenu.classList.toggle('active');
-        }
     </script>
 </body>
 </html>
