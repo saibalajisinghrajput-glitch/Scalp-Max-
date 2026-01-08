@@ -616,31 +616,43 @@
         }
 
         // Confirm payment function (called when user clicks the confirm button)
-        function confirmPayment() {
+        async function confirmPayment() {
             const orderDetails = localStorage.getItem('orderDetails');
             if (orderDetails) {
                 const order = JSON.parse(orderDetails);
                 
-                // Update order status
+                // Update order status locally first
                 order.status = 'Payment Confirmed';
-                
-                // Save updated order
                 localStorage.setItem('orderDetails', JSON.stringify(order));
                 
                 // Update in orders list
-                const allOrders = getAllOrders();
+                const allOrders = window.getAllOrders ? window.getAllOrders() : [];
                 const orderIndex = allOrders.findIndex(o => o.orderId === order.orderId);
                 if (orderIndex !== -1) {
                     allOrders[orderIndex].status = 'Payment Confirmed';
                     localStorage.setItem('allOrders', JSON.stringify(allOrders));
                 }
                 
-                // Try to update in Supabase
-                if (typeof updateOrderStatusInSupabase === 'function') {
-                    updateOrderStatusInSupabase(order.orderId, 'Payment Confirmed');
+                // Update in Supabase immediately
+                const SUPABASE_URL = 'https://zswsccjobdycswgphhrl.supabase.co';
+                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpzd3NjY2pvYmR5Y3N3Z3BoaHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDg1MDksImV4cCI6MjA4MzQyNDUwOX0.9kOt8bU67d23KCnsGskTu6Hg2guqUvlMTo4dP8_nJ9s';
+                
+                try {
+                    await fetch(`${SUPABASE_URL}/rest/v1/orders?order_id=eq.${order.orderId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status: 'Payment Confirmed' })
+                    });
+                    console.log('✅ Payment status updated in Supabase');
+                } catch (error) {
+                    console.log('⚠️ Supabase update failed:', error.message);
                 }
                 
-                // Show confirmation immediately without toast
+                // Show confirmation immediately
                 showPaymentConfirmed();
             }
         }
