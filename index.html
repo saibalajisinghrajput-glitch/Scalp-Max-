@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCALP MAX Anti Dandruff Scalp Therapy - Maximum Care for Flake-Free Scalp</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-crown"></i> SCALP MAX
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#benefits">Benefits</a>
+                <a href="#ingredients">Ingredients</a>
+                <a href="#how-to-use">How to Use</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#order" class="btn-nav">Order Now</a>
+            </div>
+            <div class="cart-icon" onclick="viewCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#home">Home</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#ingredients">Ingredients</a>
+            <a href="#how-to-use">How to Use</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#order" class="btn-nav">Order Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="badge">✨ Scalp Therapy Formula</span>
+            <h1>Luxury Care for a</h1>
+            <h2 class="highlight">Flake-Free Scalp!</h2>
+            <p class="hero-description">
+                Experience the ultimate luxury in scalp care with SCALP MAX Anti Dandruff Scalp Therapy Shampoo. 
+                Clinically proven to eliminate dandruff and moisturize dry scalp in just 12 days.
+            </p>
+            <div class="hero-price">
+                <span class="original-price">₹799</span>
+                <span class="sale-price">₹499</span>
+                <span class="discount">38% OFF</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#order" class="btn btn-primary">Order Now</a>
+                <a href="#product-details" class="btn btn-secondary">Learn More</a>
+            </div>
+            <div class="trust-badges">
+                <span><i class="fas fa-clock"></i> Results in 12 Days</span>
+                <span><i class="fas fa-truck"></i> Free Shipping All India</span>
+                <span><i class="fas fa-check-circle"></i> Dermatologist Tested</span>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="product-container">
+                <div class="product-glow"></div>
+                <div class="product-bottle">
+                    <img src="product-image.png" alt="SCALP MAX Anti Dandruff Shampoo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Section -->
+    <section id="product-details" class="product-details">
+        <div class="container">
+            <h2 class="section-title">The Solution for Dandruff-Free Hair</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast-Acting Formula</h3>
+                    <p>Clinically proven to reduce dandruff by 90% in just 12 days. See visible results from first wash itself.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tint-slash"></i>
+                    </div>
+                    <h3>Eliminates Dry Scalp</h3>
+                    <p>Deeply moisturizes your scalp to stop flaking and itching. Say goodbye to white flakes forever.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>Clinically Tested</h3>
+                    <p>Dermatologist-tested formula that fights dandruff-causing fungi and bacteria effectively.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Gentle on Hair</h3>
+                    <p>Powerful against dandruff but gentle on your hair. No harsh chemicals, only effective care.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Your Hair Needs This Shampoo</h2>
+            <div class="benefits-content">
+                <div class="benefits-image">
+                    <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500" alt="Healthy flake-free scalp">
+                </div>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <div class="benefit-number">01</div>
+                        <div class="benefit-text">
+                            <h4>Removes Dandruff Completely</h4>
+                            <p>Eliminates 90% of dandruff flakes within 12 days with regular use</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">02</div>
+                        <div class="benefit-text">
+                            <h4>Stops Itching & Irritation</h4>
+                            <p>Soothes your scalp and provides instant relief from itchiness</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">03</div>
+                        <div class="benefit-text">
+                            <h4>Moisturizes Dry Scalp</h4>
+                            <p>Deep hydration that prevents flaking and dryness from root to tip</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">04</div>
+                        <div class="benefit-text">
+                            <h4>Prevents Recurrence</h4>
+                            <p>Keeps dandruff away for longer with continued use</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">05</div>
+                        <div class="benefit-text">
+                            <h4>Promotes Healthy Hair Growth</h4>
+                            <p>A healthy scalp leads to stronger, thicker hair strands</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ingredients Section -->
+    <section id="ingredients" class="ingredients">
+        <div class="container">
+            <h2 class="section-title">Powerful Anti-Dandruff Ingredients</h2>
+            <div class="ingredients-grid">
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Zinc Pyrithione</h3>
+                    <p>Clinically proven anti-fungal agent that fights dandruff-causing Malassezia yeast</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Tea Tree Oil</h3>
+                    <p>Natural antifungal and antibacterial properties that soothe itchy scalp</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Aloe Vera</h3>
+                    <p>Deeply moisturizes dry scalp and reduces flaking and irritation</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Neem Extract</h3>
+                    <p>Traditional Ayurvedic ingredient with powerful antibacterial properties</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Salicylic Acid</h3>
+                    <p>Gently exfoliates scalp and removes dead skin cells and flakes</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-coconut"></i>
+                    </div>
+                    <h3>Coconut Oil</h3>
+                    <p>Provides deep hydration to prevent dryness and flaking</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Vitamin E</h3>
+                    <p>Premium nourishment and repair for stronger, healthier hair strands</p>
+                </div>
+                <div class="ingredient-card">
+                    <div class="ingredient-icon">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <h3>Panthenol (Pro-Vitamin B5)</h3>
+                    <p>Moisture-lock technology that strengthens hair and prevents breakage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section id="how-to-use" class="how-to-use">
+        <div class="container">
+            <h2 class="section-title">How to Use</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="step-number">Step 1</div>
+                    <h3>Wet Your Hair</h3>
+                    <p>Thoroughly wet your hair with warm water to open the hair cuticles</p>
+                </div>
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-pump-soap"></i>
+                    </div>
+                    <div class="step-number">Step 2</div>
+                    <h3>Apply Shampoo</h3>
+                    <p>Take a coin-sized amount and gently massage into scalp with fingertips</p>
+                </div>
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <div class="step-number">Step 3</div>
+                    <h3>Massage & Lather</h3>
+                    <p>Massage for 2-3 minutes to create rich lather and stimulate circulation</p>
+                </div>
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-shower"></i>
+                    </div>
+                    <div class="step-number">Step 4</div>
+                    <h3>Rinse Thoroughly</h3>
+                    <p>Rinse with cool water to seal the cuticles and lock in moisture</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Incredible results! My dandruff was so bad for years, and this shampoo cleared it up in just 10 days. No more itchy scalp or white flakes on my clothes. Highly recommend!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">A</div>
+                        <div class="reviewer-info">
+                            <h4>Amit Patel</h4>
+                            <span>Ahmedabad, Gujarat</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"Finally found a shampoo that works! My dry scalp and dandruff are completely gone. The best part - it didn't dry out my hair like other anti-dandruff shampoos do."</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">S</div>
+                        <div class="reviewer-info">
+                            <h4>Priya Sharma</h4>
+                            <span>Delhi, NCR</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Best investment ever! Within 12 days as promised, my dandruff was completely gone. I ordered for my husband too now. Got it delivered to our village in Bihar without any issue."</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">R</div>
+                        <div class="reviewer-info">
+                            <h4>Rekha Devi</h4>
+                            <span>Patna, Bihar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order" class="order-section">
+        <div class="container">
+            <div class="order-card">
+                <div class="order-header">
+                    <h2>Get Flake-Free Scalp in 12 Days!</h2>
+                    <p>Free shipping anywhere in India!</p>
+                </div>
+                <div class="order-content">
+                    <div class="product-info">
+                        <img src="product-image.png" alt="SCALP MAX Anti Dandruff Shampoo">
+                        <div class="product-details">
+                            <h3>SCALP MAX Anti Dandruff Scalp Therapy Shampoo</h3>
+                            <p>300ml Bottle | Luxury Scalp Therapy</p>
+                            <div class="price-info">
+                                <span class="price">₹499</span>
+                                <span class="mrp">MRP ₹799</span>
+                                <span class="save">Save ₹300</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="quantity-controls">
+                            <button onclick="changeQuantity(-1)">-</button>
+                            <span id="quantity">1</span>
+                            <button onclick="changeQuantity(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="order-total">
+                        <span>Total Amount:</span>
+                        <span id="total-price">₹499</span>
+                    </div>
+                    <a href="checkout.html" class="btn btn-primary btn-block" onclick="prepareOrder(event)">Order Now - Get Flake-Free Scalp!</a>
+                    <div class="guarantee-badge" style="text-align: center; margin-top: 15px;">
+                        <p style="color: #2e7d32; font-weight: 500;">
+                            <i class="fas fa-medal"></i> 12-Day Flake-Free Guarantee or Money Back!
+                        </p>
+                    </div>
+                    <div class="payment-methods">
+                        <p>Accepting:</p>
+                        <div class="payment-icons">
+                            <span><i class="fas fa-money-bill-wave"></i> COD</span>
+                            <span><i class="fas fa-mobile-alt"></i> UPI</span>
+                            <span><i class="fas fa-credit-card"></i> Cards</span>
+                            <span><i class="fas fa-university"></i> Net Banking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How quickly will I see results?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most customers see visible reduction in dandruff flakes within the first 3-4 washes. Complete dandruff removal is typically achieved within 12 days of regular use as promised.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is this shampoo suitable for dry scalp?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! This shampoo is specially formulated to treat both dandruff and dry scalp. It contains moisturizing ingredients like coconut oil and aloe vera that hydrate your scalp while fighting dandruff.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How often should I use this shampoo?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>For best results, use this shampoo 2-3 times per week. For severe dandruff, you can use it daily for the first week, then reduce to 2-3 times per week for maintenance.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Will dandruff come back after stopping use?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>With regular use for at least 4 weeks, the dandruff recurrence is significantly reduced. To maintain dandruff-free hair, continue using the shampoo 1-2 times per week as maintenance.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can I use this on colored/treated hair?</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Our formula is gentle and safe for colored and chemically treated hair. It won't strip your hair color while effectively treating dandruff.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Contact Us</h2>
+                    <p>Have questions? We're here to help!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 9010988498</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>care@scalpmax.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>India</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+91 9010988498</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm" onsubmit="submitContactForm(event)">
+                        <div class="form-group">
+                            <input type="text" id="contactName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="contactEmail" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="contactPhone" placeholder="Your Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contactMessage" placeholder="Your Message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-crown"></i> SCALP MAX</h3>
+                    <p>Maximum strength anti-dandruff scalp therapy for healthy, flake-free scalp.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#benefits">Benefits</a>
+                    <a href="#ingredients">Ingredients</a>
+                    <a href="#order">Order Now</a>
+                    <a href="admin-orders.html">View Orders</a>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SCALP MAX. All rights reserved. | Made with <i class="fas fa-heart"></i> in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <span class="close-btn" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <div class="cart-item">
+                    <img src="product-image.png" alt="Shampoo">
+                    <div class="cart-item-details">
+                        <h4>SCALP MAX Anti Dandruff Shampoo</h4>
+                        <p>₹499 x <span id="cartQuantity">1</span></p>
+                    </div>
+                    <div class="cart-item-price" id="cartItemTotal">₹499</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">₹499</span>
+                </div>
+                <a href="checkout.html" class="btn btn-primary" onclick="prepareOrder(event)">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

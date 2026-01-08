@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - SCALP MAX</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .thank-you-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+        }
+        
+        .thank-you-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .success-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #2d5a27, #4a8c42);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: scaleIn 0.5s ease;
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .success-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .success-icon.pending {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+        
+        .thank-you-card h1 {
+            color: #2d5a27;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .order-id-box {
+            background: linear-gradient(135deg, #f5f5f5, #eee);
+            padding: 18px 30px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 20px 0;
+            border: 2px dashed #ccc;
+        }
+        
+        .order-id-box .label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .order-id-box .order-id {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2d5a27;
+            letter-spacing: 2px;
+        }
+        
+        .order-status {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        
+        .order-status.pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .order-status.confirmed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .order-status.success {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .message {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        
+        .order-details-box {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: left;
+            border: 1px solid #eee;
+        }
+        
+        .order-details-box h3 {
+            color: #333;
+            margin-bottom: 18px;
+            font-size: 1.15rem;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-row .label {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        
+        .detail-row .value {
+            color: #333;
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .detail-row .value.highlight {
+            color: #2d5a27;
+            font-weight: 600;
+        }
+        
+        /* UPI Payment Section */
+        .upi-section {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .upi-section h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .upi-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .upi-info p {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+        
+        .upi-details {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .upi-detail {
+            background: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .upi-detail strong {
+            color: #2d5a27;
+        }
+        
+        .qr-code {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+        }
+        
+        .qr-code p {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 10px;
+        }
+        
+        .payment-confirm-btn {
+            background: linear-gradient(135deg, #2d5a27, #4a8c42) !important;
+            color: white !important;
+            padding: 16px 40px !important;
+            font-size: 1.1rem !important;
+            border-radius: 30px !important;
+            box-shadow: 0 6px 20px rgba(45, 90, 39, 0.35) !important;
+        }
+        
+        .payment-confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.45) !important;
+        }
+        
+        .payment-confirm-btn i {
+            margin-right: 10px;
+        }
+        
+        .confirmation-message {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .confirmation-message h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .confirmation-message p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        .confirmation-message i {
+            color: #4caf50;
+            margin-right: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+            margin: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #2d5a27, #4a8c42);
+            color: white;
+            box-shadow: 0 4px 15px rgba(45, 90, 39, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 90, 39, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #2d5a27;
+            border: 2px solid #2d5a27;
+        }
+        
+        .btn-secondary:hover {
+            background: #2d5a27;
+            color: white;
+        }
+        
+        .whatsapp-support {
+            background: #e8f5e9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .whatsapp-support p {
+            color: #2d5a27;
+            margin-bottom: 12px;
+        }
+        
+        .whatsapp-btn {
+            background: #25D366 !important;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3) !important;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #20BD5A !important;
+            transform: translateY(-2px);
+        }
+        
+        .action-buttons {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @media (max-width: 576px) {
+            .thank-you-card {
+                padding: 35px 20px;
+            }
+            
+            .thank-you-card h1 {
+                font-size: 1.8rem;
+            }
+            
+            .order-id-box .order-id {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px 0;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .detail-row .value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-crown"></i> SCALP MAX
+            </a>
+        </div>
+    </nav>
+
+    <!-- Thank You Section -->
+    <section class="thank-you-section">
+        <div class="thank-you-card fade-in">
+            <!-- Success Icon -->
+            <div class="success-icon" id="successIcon">
+                <i class="fas fa-check" id="successIconInner"></i>
+            </div>
+            
+            <!-- Thank You Message -->
+            <h1 id="thankYouTitle">Thank You!</h1>
+            <p class="message" id="thankYouMessage">Your order has been placed successfully.</p>
+            
+            <!-- Order ID -->
+            <div class="order-id-box">
+                <div class="label">Your Order ID</div>
+                <div class="order-id" id="orderId">Loading...</div>
+            </div>
+            
+            <!-- Order Status -->
+            <div class="order-status pending" id="orderStatus">Processing</div>
+            
+            <!-- Order Summary -->
+            <div class="order-details-box">
+                <h3>Order Summary</h3>
+                <div class="detail-row">
+                    <span class="label">Product</span>
+                    <span class="value">SCALP MAX Anti Dandruff Scalp Therapy</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Quantity</span>
+                    <span class="value" id="quantity">1</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Total Amount</span>
+                    <span class="value highlight">₹<span id="total">499</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Payment Method</span>
+                    <span class="value" id="paymentMethod">COD</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Customer Name</span>
+                    <span class="value" id="customerName">-</span>
+                </div>
+            </div>
+            
+            <!-- Shipping Address -->
+            <div class="order-details-box" id="addressSection" style="display: none;">
+                <h3>Shipping Address</h3>
+                <div class="detail-row">
+                    <span class="label">Address</span>
+                    <span class="value" id="customerAddress">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">City</span>
+                    <span class="value" id="customerCity">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">State</span>
+                    <span class="value" id="customerState">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">PIN Code</span>
+                    <span class="value" id="customerPincode">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Phone</span>
+                    <span class="value" id="customerPhone">-</span>
+                </div>
+            </div>
+            
+            <!-- UPI Payment Section (shown for UPI orders) -->
+            <div class="upi-section" id="upiSection" style="display: none;">
+                <h4><i class="fas fa-mobile-alt"></i> UPI Payment Details</h4>
+                
+                <div class="upi-info">
+                    <p><strong>Scan QR Code to Pay:</strong></p>
+                    <div class="qr-code">
+                        <!-- UPI QR Code - Generated dynamically -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=saibalajisinghrajput@oksbi&pn=SCALP%20MAX&am=499&tn=SCALP%20MAX%20Order" alt="UPI QR Code" id="upiQRCode">
+                        <p>Scan with any UPI app</p>
+                    </div>
+                    
+                    <div class="upi-details">
+                        <div class="upi-detail">
+                            <strong>UPI ID:</strong><br>
+                            <span id="upiId">saibalajisinghrajput@oksbi</span>
+                        </div>
+                        <div class="upi-detail">
+                            <strong>Amount:</strong><br>
+                            <span id="upiAmount">₹499</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                    Complete payment in your UPI app, then click the button below to confirm.
+                </p>
+                
+                <!-- Payment Confirmation Button -->
+                <button class="btn payment-confirm-btn" id="confirmPaymentBtn" onclick="confirmPayment()">
+                    <i class="fas fa-check-circle"></i> I Have Completed Payment
+                </button>
+            </div>
+            
+            <!-- Payment Confirmation Message (shown after confirming) -->
+            <div class="confirmation-message" id="confirmationMessage" style="display: none;">
+                <h4><i class="fas fa-check-circle"></i> Payment Confirmed!</h4>
+                <p>Thank you! Your payment has been confirmed and your order is now being processed. You will receive an order confirmation email shortly.</p>
+            </div>
+            
+            <!-- WhatsApp Support -->
+            <div class="whatsapp-support">
+                <p><strong>Need help?</strong> Contact us on WhatsApp for quick support!</p>
+                <a href="https://wa.me/919010988498" class="btn whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="index.html" class="btn btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderDetails();
+        });
+
+        function loadOrderDetails() {
+            const orderDetails = localStorage.getItem('orderDetails');
+            
+            if (orderDetails) {
+                const order = JSON.parse(orderDetails);
+                
+                // Display order ID
+                document.getElementById('orderId').textContent = order.orderId || 'SM' + Date.now().toString().slice(-8);
+                
+                // Display order details
+                document.getElementById('quantity').textContent = order.quantity || 1;
+                document.getElementById('total').textContent = order.total || '499';
+                document.getElementById('paymentMethod').textContent = order.paymentMethod || 'COD';
+                document.getElementById('customerName').textContent = order.name || '-';
+                
+                // Display shipping address if available
+                if (order.address) {
+                    document.getElementById('addressSection').style.display = 'block';
+                    document.getElementById('customerAddress').textContent = order.address || '-';
+                    document.getElementById('customerCity').textContent = (order.city || '-') + (order.state ? ', ' + order.state : '');
+                    document.getElementById('customerState').textContent = order.state || '-';
+                    document.getElementById('customerPincode').textContent = order.pincode || '-';
+                    document.getElementById('customerPhone').textContent = order.phone || '-';
+                }
+                
+                // Update UPI section if payment is UPI
+                if (order.paymentMethod === 'UPI' || order.paymentMethod === 'upi') {
+                    const upiSection = document.getElementById('upiSection');
+                    const successIcon = document.getElementById('successIcon');
+                    const successIconInner = document.getElementById('successIconInner');
+                    const thankYouTitle = document.getElementById('thankYouTitle');
+                    const thankYouMessage = document.getElementById('thankYouMessage');
+                    const orderStatus = document.getElementById('orderStatus');
+                    
+                    // Show UPI section
+                    upiSection.style.display = 'block';
+                    
+                    // Update icon to pending state
+                    successIcon.classList.add('pending');
+                    successIconInner.className = 'fas fa-clock';
+                    
+                    // Update title and message
+                    thankYouTitle.textContent = 'Complete Payment';
+                    thankYouMessage.textContent = 'Your order has been created. Please complete the UPI payment to confirm your order.';
+                    
+                    // Update status
+                    orderStatus.textContent = 'Payment Pending';
+                    orderStatus.classList.remove('confirmed', 'success');
+                    orderStatus.classList.add('pending');
+                    
+                    // Update QR code with correct amount
+                    const amount = order.total || 499;
+                    const qrCode = document.getElementById('upiQRCode');
+                    qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent('upi://pay?pa=saibalajisinghrajput@oksbi&pn=SCALP%20MAX&am=' + amount + '&tn=SCALP%20MAX%20Order%20' + order.orderId)}`;
+                    
+                    document.getElementById('upiAmount').textContent = '₹' + amount;
+                } else {
+                    // For non-UPI orders, update status
+                    document.getElementById('orderStatus').textContent = 'Order Placed';
+                    document.getElementById('orderStatus').classList.remove('pending');
+                    document.getElementById('orderStatus').classList.add('success');
+                }
+                
+                // If payment is already confirmed
+                if (order.status === 'Payment Confirmed') {
+                    showPaymentConfirmed();
+                }
+            } else {
+                // No order found - generate a demo order ID
+                document.getElementById('orderId').textContent = 'SM' + Date.now().toString().slice(-8);
+                document.getElementById('orderStatus').textContent = 'Demo Order';
+            }
+        }
+
+        function showPaymentConfirmed() {
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+            const upiSection = document.getElementById('upiSection');
+            const successIcon = document.getElementById('successIcon');
+            const successIconInner = document.getElementById('successIconInner');
+            const thankYouTitle = document.getElementById('thankYouTitle');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            const orderStatus = document.getElementById('orderStatus');
+            
+            // Hide UPI section and confirm button
+            upiSection.style.display = 'none';
+            confirmPaymentBtn.style.display = 'none';
+            
+            // Show confirmation message
+            confirmationMessage.style.display = 'block';
+            
+            // Update icon to success
+            successIcon.classList.remove('pending');
+            successIconInner.className = 'fas fa-check';
+            
+            // Update title and message
+            thankYouTitle.textContent = 'Thank You!';
+            thankYouMessage.textContent = 'Your payment has been confirmed and your order is being processed!';
+            
+            // Update status
+            orderStatus.textContent = 'Payment Confirmed';
+            orderStatus.classList.remove('pending');
+            orderStatus.classList.add('confirmed');
+        }
+
+        // Confirm payment function (called when user clicks the confirm button)
+        function confirmPayment() {
+            const orderDetails = localStorage.getItem('orderDetails');
+            if (orderDetails) {
+                const order = JSON.parse(orderDetails);
+                
+                // Update order status
+                order.status = 'Payment Confirmed';
+                
+                // Save updated order
+                localStorage.setItem('orderDetails', JSON.stringify(order));
+                
+                // Update in orders list
+                const allOrders = getAllOrders();
+                const orderIndex = allOrders.findIndex(o => o.orderId === order.orderId);
+                if (orderIndex !== -1) {
+                    allOrders[orderIndex].status = 'Payment Confirmed';
+                    localStorage.setItem('allOrders', JSON.stringify(allOrders));
+                }
+                
+                // Try to update in Supabase
+                if (typeof updateOrderStatusInSupabase === 'function') {
+                    updateOrderStatusInSupabase(order.orderId, 'Payment Confirmed');
+                }
+                
+                showToast('Payment confirmed! Your order is being processed.');
+                
+                // Show confirmation
+                showPaymentConfirmed();
+            } else {
+                showToast('No order found to confirm');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #2d5a27; color: white; padding: 15px 25px; border-radius: 8px; z-index: 10000; animation: fadeIn 0.3s; font-family: inherit;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+

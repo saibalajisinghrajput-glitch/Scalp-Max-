@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Scalp Max</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a5f4a 0%, #2d8a6e 100%);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .login-box h2 {
+            color: #1a5f4a;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .login-box p {
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .login-box input:focus {
+            outline: none;
+            border-color: #1a5f4a;
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #1a5f4a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .login-box button:hover {
+            background: #144a38;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #1a5f4a 0%, #2d8a6e 100%);
+            color: white;
+            padding: 15px 20px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar.visible {
+            display: flex;
+        }
+        
+        .navbar h1 {
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.15);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 25px;
+            display: none;
+        }
+        
+        .container.visible {
+            display: block;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .page-header h2 {
+            color: #1a5f4a;
+            font-size: 24px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #1a5f4a;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #144a38;
+        }
+        
+        .btn-secondary {
+            background: #fff;
+            color: #1a5f4a;
+            border: 2px solid #1a5f4a;
+        }
+        
+        .btn-secondary:hover {
+            background: #1a5f4a;
+            color: white;
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            color: #6c757d;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a5f4a;
+        }
+        
+        .stat-card.revenue .value {
+            color: #28a745;
+        }
+        
+        .orders-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 18px 22px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .card-header h3 {
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-box input {
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 260px;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #1a5f4a;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            font-size: 12px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        
+        td {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: #1a5f4a;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-new {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-shipped {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .total-amount {
+            font-weight: 600;
+            color: #28a745;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .view-btn {
+            background: #1a5f4a;
+            color: white;
+        }
+        
+        .complete-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state svg {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 15px;
+            opacity: 0.4;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: #6c757d;
+            line-height: 1;
+        }
+        
+        .modal-body {
+            padding: 22px;
+        }
+        
+        .detail-row {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+        
+        .detail-value {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .modal-footer {
+            padding: 18px 22px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .modal-footer .btn {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header-actions {
+                justify-content: center;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            th, td {
+                padding: 10px;
+                font-size: 12px;
+            }
+            
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h2>🔐 Admin Access</h2>
+            <p>Enter password to view orders</p>
+            <input type="password" id="adminPassword" placeholder="Enter password" onkeyup="handleEnter(event)">
+            <button onclick="checkPassword()">Access Orders</button>
+            <p class="error" id="loginError">Incorrect password. Try again.</p>
+        </div>
+    </div>
+    
+    <!-- Navbar (visible after login) -->
+    <nav class="navbar" id="navbar">
+        <h1>📦 Scalp Max Orders</h1>
+        <div class="nav-links">
+            <a href="index.html">🏠 Back to Website</a>
+            <a href="#" onclick="logout(); return false;">🚪 Logout</a>
+        </div>
+    </nav>
+    
+    <!-- Orders Container (visible after login) -->
+    <div class="container" id="ordersContainer">
+        <div class="page-header">
+            <h2>📋 All Orders</h2>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="downloadCSV()">📥 Download CSV</button>
+                <button class="btn btn-secondary" onclick="printOrders()">🖨️ Print</button>
+            </div>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-card">
+                <h4>Total Orders</h4>
+                <div class="value" id="totalOrders">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Pending</h4>
+                <div class="value" id="pendingOrders">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Completed</h4>
+                <div class="value" id="completedOrders">0</div>
+            </div>
+            <div class="stat-card revenue">
+                <h4>Total Revenue</h4>
+                <div class="value" id="totalRevenue">₹0</div>
+            </div>
+        </div>
+        
+        <div class="orders-card">
+            <div class="card-header">
+                <h3>Order Details</h3>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search orders..." onkeyup="searchOrders()">
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersBody">
+                    </tbody>
+                </table>
+            </div>
+            <div id="emptyState" class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+                <h4>No orders yet</h4>
+                <p>Orders will appear here when customers place orders.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Details Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Order Details</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="orderDetails">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="updateStatus('Completed')">✅ Mark Completed</button>
+                <button class="btn btn-danger" onclick="updateStatus('Cancelled')">❌ Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const ADMIN_PASSWORD = 'scalpmax2024'; // Change this password
+        
+        let orders = [];
+        let selectedOrder = null;
+        
+        // Check if already logged in
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            if (isLoggedIn === 'true') {
+                showOrdersPage();
+            }
+        }
+        
+        function handleEnter(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            const error = document.getElementById('loginError');
+            
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                showOrdersPage();
+            } else {
+                error.style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+            }
+        }
+        
+        function showOrdersPage() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('navbar').classList.add('visible');
+            document.getElementById('ordersContainer').classList.add('visible');
+            loadOrders();
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            location.reload();
+        }
+        
+        function loadOrders() {
+            orders = JSON.parse(localStorage.getItem('scalpMaxOrders') || '[]');
+            orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            renderOrders();
+            updateStats();
+        }
+        
+        function refreshOrders() {
+            loadOrders();
+            showToast('Orders refreshed!');
+        }
+        
+        function renderOrders(filteredOrders = null) {
+            const ordersToRender = filteredOrders || orders;
+            const tbody = document.getElementById('ordersBody');
+            const emptyState = document.getElementById('emptyState');
+            const table = document.getElementById('ordersTable');
+            
+            if (ordersToRender.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            table.style.display = 'table';
+            emptyState.style.display = 'none';
+            
+            tbody.innerHTML = ordersToRender.map(order => `
+                <tr data-order-id="${order.orderId}">
+                    <td class="order-id">${order.orderId}</td>
+                    <td>${order.date}</td>
+                    <td>${order.name}</td>
+                    <td>${order.phone}</td>
+                    <td>${order.city}</td>
+                    <td>${order.quantity}</td>
+                    <td class="total-amount">₹${order.total}</td>
+                    <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
+                    <td>
+                        <button class="action-btn view-btn" onclick="viewOrder('${order.orderId}')">View</button>
+                        <button class="action-btn complete-btn" onclick="quickComplete('${order.orderId}')">✓</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function updateStats() {
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = orders.filter(o => o.status === 'New Order').length;
+            document.getElementById('completedOrders').textContent = orders.filter(o => o.status === 'Completed').length;
+            
+            const totalRevenue = orders.reduce((sum, order) => sum + parseInt(order.total || 0), 0);
+            document.getElementById('totalRevenue').textContent = '₹' + totalRevenue.toLocaleString();
+        }
+        
+        function searchOrders() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderOrders();
+                return;
+            }
+            
+            const filtered = orders.filter(order => 
+                order.name.toLowerCase().includes(searchTerm) ||
+                order.phone.includes(searchTerm) ||
+                order.orderId.toLowerCase().includes(searchTerm) ||
+                order.city.toLowerCase().includes(searchTerm)
+            );
+            
+            renderOrders(filtered);
+        }
+        
+        function viewOrder(orderId) {
+            const order = orders.find(o => o.orderId === orderId);
+            if (!order) return;
+            
+            selectedOrder = order;
+            
+            const detailsHtml = `
+                <div class="detail-row">
+                    <div class="detail-label">Order ID</div>
+                    <div class="detail-value" style="font-weight: 600; color: #1a5f4a;">${order.orderId}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date & Time</div>
+                    <div class="detail-value">${order.date} at ${order.time}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value"><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></div>
+                </div>
+                <hr style="border: none; border-top: 1px solid #eee; margin: 15px 0;">
+                <div class="detail-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Customer Name</div>
+                        <div class="detail-value">${order.name}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value">${order.email}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value">${order.phone}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Quantity</div>
+                        <div class="detail-value">${order.quantity}</div>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Shipping Address</div>
+                    <div class="detail-value">${order.address}<br>${order.city}, ${order.state} - ${order.pincode}</div>
+                </div>
+                <hr style="border: none; border-top: 1px solid #eee; margin: 15px 0;">
+                <div class="detail-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Total Amount</div>
+                        <div class="detail-value" style="font-size: 20px; font-weight: 700; color: #28a745;">₹${order.total}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Payment Method</div>
+                        <div class="detail-value">${order.paymentMethod}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('orderDetails').innerHTML = detailsHtml;
+            document.getElementById('orderModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            selectedOrder = null;
+        }
+        
+        function updateStatus(newStatus) {
+            if (!selectedOrder) return;
+            
+            const orderIndex = orders.findIndex(o => o.orderId === selectedOrder.orderId);
+            if (orderIndex === -1) return;
+            
+            orders[orderIndex].status = newStatus;
+            orders[orderIndex].lastUpdated = new Date().toISOString();
+            
+            localStorage.setItem('scalpMaxOrders', JSON.stringify(orders));
+            
+            renderOrders();
+            updateStats();
+            closeModal();
+            
+            showToast(`Order ${newStatus}!`);
+        }
+        
+        function quickComplete(orderId) {
+            const order = orders.find(o => o.orderId === orderId);
+            if (!order) return;
+            
+            selectedOrder = order;
+            updateStatus('Completed');
+        }
+        
+        function downloadCSV() {
+            if (orders.length === 0) {
+                showToast('No orders to download!');
+                return;
+            }
+            
+            let csv = 'Order ID,Date,Time,Name,Email,Phone,Address,City,State,Pincode,Quantity,Total,Payment,Status\n';
+            
+            orders.forEach(order => {
+                const address = (order.address || '').replace(/"/g, '""');
+                csv += `"${order.orderId}","${order.date}","${order.time}","${order.name}","${order.email}","${order.phone}","${address}","${order.city}","${order.state}","${order.pincode}","${order.quantity}","${order.total}","${order.paymentMethod}","${order.status}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'scalp_max_orders_' + new Date().toISOString().slice(0, 10) + '.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showToast('CSV downloaded!');
+        }
+        
+        function printOrders() {
+            if (orders.length === 0) {
+                showToast('No orders to print!');
+                return;
+            }
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Scalp Max Orders - ${new Date().toLocaleDateString()}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: #1a5f4a; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                        th { background: #1a5f4a; color: white; }
+                        .total { font-weight: bold; color: #28a745; }
+                    </style>
+                </head>
+                <body>
+                    <h1>📦 Scalp Max Orders</h1>
+                    <p>Generated: ${new Date().toLocaleString()}</p>
+                    <p>Total Orders: ${orders.length}</p>
+                    <table>
+                        <tr>
+                            <th>Order ID</th><th>Date</th><th>Customer</th><th>Phone</th><th>City</th><th>Total</th><th>Status</th>
+                        </tr>
+                        ${orders.map(o => `<tr><td>${o.orderId}</td><td>${o.date}</td><td>${o.name}</td><td>${o.phone}</td><td>${o.city}</td><td class="total">₹${o.total}</td><td>${o.status}</td></tr>`).join('')}
+                    </table>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #1a5f4a; color: white; padding: 14px 24px; border-radius: 8px; z-index: 10000; animation: fadeIn 0.3s; font-size: 14px;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+        
+        // Initialize
+        checkAuth();
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'orderModal') closeModal();
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
+

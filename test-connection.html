@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a8c42 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .status-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .success {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+        }
+        
+        .error {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            color: #c62828;
+        }
+        
+        .pending {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            color: #e65100;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a8c42 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(45, 90, 39, 0.4);
+        }
+        
+        .btn-green {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        }
+        
+        .btn-blue {
+            background: linear-gradient(135deg, #1565c0 0%, #42a5f5 100%);
+        }
+        
+        .info {
+            background: #e3f2fd;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .info h3 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+        
+        .info ul {
+            margin-left: 20px;
+            color: #333;
+        }
+        
+        .info li {
+            margin: 5px 0;
+        }
+        
+        .input-group {
+            margin: 15px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: monospace;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #2d5a27;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Supabase Connection Test</h1>
+        
+        <div class="info">
+            <h3>📋 Quick Setup:</h3>
+            <ol style="margin-left: 20px; color: #333;">
+                <li>Go to <a href="https://supabase.com" target="_blank">Supabase Dashboard</a></li>
+                <li>Select your project: <strong>zswsccjobdyphhrl</strong></li>
+                <li>Go to <strong>Table Editor → orders</strong></li>
+                <li>Create table with columns matching order data</li>
+                <li>Enable RLS policies for anonymous access</li>
+            </ol>
+        </div>
+        
+        <div class="input-group">
+            <label>Supabase URL:</label>
+            <input type="text" id="supabaseUrl" value="https://zswsccjobdycswgphhrl.supabase.co" readonly>
+        </div>
+        
+        <div style="text-align: center;">
+            <button class="btn btn-green" onclick="runTests()">▶️ Run Connection Tests</button>
+            <button class="btn btn-blue" onclick="insertTestOrder()">📝 Insert Test Order</button>
+            <button class="btn" onclick="clearLog()">🗑️ Clear Log</button>
+        </div>
+        
+        <div id="log" class="status-box pending">Click "Run Connection Tests" to begin...</div>
+    
+    <script>
+        const SUPABASE_URL = 'https://zswsccjobdycswgphhrl.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpzd3NjY2pvYmR5Y3N3Z3BoaHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDg1MDksImV4cCI6MjA4MzQyNDUwOX0.9kOt8bU67d23KCnsGskTu6Hg2guqUvlMTo4dP8_nJ9s';
+        
+        let logMessages = [];
+        
+        function log(message, type = 'pending') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logMessages.push(logEntry);
+            document.getElementById('log').textContent = logMessages.join('\n');
+            document.getElementById('log').className = 'status-box ' + type;
+            console.log(message);
+        }
+        
+        function clearLog() {
+            logMessages = [];
+            document.getElementById('log').textContent = 'Click "Run Connection Tests" to begin...';
+            document.getElementById('log').className = 'status-box pending';
+        }
+        
+        async function runTests() {
+            clearLog();
+            log('🧪 Starting Supabase connection tests...\n');
+            
+            // Test 1: Check URL format
+            log('Test 1: Checking URL format...');
+            if (SUPABASE_URL.includes('supabase.co')) {
+                log('✅ URL format is correct', 'success');
+            } else {
+                log('❌ URL format is incorrect', 'error');
+                return;
+            }
+            
+            // Test 2: Try GET request to check project exists
+            log('\nTest 2: Checking Supabase project...');
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/orders?limit=1`, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    log('✅ Supabase project is accessible', 'success');
+                    log(`Response status: ${response.status}`, 'success');
+                } else if (response.status === 401) {
+                    log('⚠️ Authentication issue - check anon key', 'error');
+                } else if (response.status === 404) {
+                    log('⚠️ Table "orders" not found - create it in Supabase', 'error');
+                } else {
+                    log(`⚠️ Response status: ${response.status}`, 'pending');
+                }
+            } catch (e) {
+                log(`❌ Network Error: ${e.message}`, 'error');
+            }
+        }
+        
+        async function insertTestOrder() {
+            clearLog();
+            log('🧪 Inserting test order...\n');
+            
+const testOrder = {
+                order_id: 'TEST-' + Date.now().toString().slice(-6),
+                name: 'Test Customer',
+                email: 'test@example.com',
+                phone: '9876543210',
+                address: 'Test Address, City',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                quantity: '1',
+                total: '499',
+                payment: 'COD',
+                transaction_id: '',
+                status: 'Test Order',
+                created_at: new Date().toISOString(),
+                date: new Date().toLocaleDateString('en-IN'),
+                time: new Date().toLocaleTimeString('en-IN')
+            };
+            
+            log(`📤 Sending test order: ${testOrder.order_id}`);
+            
+            try {
+                log('\n⏳ Sending POST request to Supabase...');
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(testOrder)
+                });
+                
+                log(`POST Response Status: ${response.status}`, response.ok ? 'success' : 'error');
+                
+                if (response.ok || response.status === 201) {
+                    log('\n✅ ORDER INSERTED SUCCESSFULLY!', 'success');
+                    log('👉 Check your Supabase Table Editor → orders', 'success');
+                } else {
+                    const errorText = await response.text();
+                    log(`Error details: ${errorText}`, 'error');
+                    
+                    if (response.status === 401) {
+                        log('\n🔧 Fix: Check RLS policies allow anon insert', 'error');
+                    } else if (response.status === 404) {
+                        log('\n🔧 Fix: Create "orders" table in Supabase', 'error');
+                    }
+                }
+                
+            } catch (e) {
+                log(`\n❌ Network Error: ${e.message}`, 'error');
+                log('\n🔧 Check your internet connection', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
+
