@@ -640,12 +640,8 @@
                     updateOrderStatusInSupabase(order.orderId, 'Payment Confirmed');
                 }
                 
-                showToast('Payment confirmed! Your order is being processed.');
-                
-                // Show confirmation
+                // Show confirmation immediately without toast
                 showPaymentConfirmed();
-            } else {
-                showToast('No order found to confirm');
             }
         }
 
