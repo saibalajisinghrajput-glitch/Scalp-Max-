@@ -1,0 +1,4 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git push origin master:main --force
+</parameter>

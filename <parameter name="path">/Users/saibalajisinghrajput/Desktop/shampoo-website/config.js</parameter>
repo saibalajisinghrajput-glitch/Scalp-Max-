@@ -1,0 +1,11 @@
+<parameter name="content">// Supabase Configuration
+// Replace these with your actual Supabase credentials
+const SUPABASE_URL = 'https://your-project.supabase.co';
+const SUPABASE_KEY = 'your-anon-key';
+
+// Initialize Supabase client
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Export for use in other files
+window.supabaseClient = supabaseClient;
+</parameter>

@@ -1,0 +1,7 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git init
+git add .
+git commit -m "Clean website with payment flow"
+git remote add origin https://github.com/saibalajisinghrajput-glitch/Scalp-Max-.git
+git push -u origin main</parameter>

@@ -1,0 +1,19 @@
+<parameter name="content"># How to Delete Master Branch on GitHub
+
+## Quick Steps (Do This Now):
+
+### Step 1: Change Default Branch to Main
+1. Go to: https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/settings/branches
+2. Under "Default branch", select **main**
+3. Click "Update"
+4. Done! ✅
+
+### Step 2: Delete Master Branch
+1. Go to: https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/branches
+2. Find "master" branch
+3. Click the **trash icon** 🗑️ next to it
+4. Confirm "Delete"
+
+## Done! 
+Your repository now uses **main** as the only branch.
+</parameter>

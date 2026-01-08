@@ -1,0 +1,66 @@
+<parameter name="content"><!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Master Branch</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .step { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        h2 { color: #333; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; }
+        .success { background: #d4edda; border: 1px solid #28a745; }
+    </style>
+</head>
+<body>
+    <h1>🗑️ How to Delete Master Branch on GitHub</h1>
+    
+    <div class="step warning">
+        <h2>⚠️ Important: Do Step 1 First!</h2>
+        <p>You must set a different branch as default BEFORE deleting master.</p>
+    </div>
+
+    <div class="step">
+        <h2>Step 1: Set Main as Default Branch</h2>
+        <p><a href="https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/settings/branches" target="_blank">👉 Click here to go to Branch Settings</a></p>
+        <ol>
+            <li>Under "Default branch", select <strong>main</strong></li>
+            <li>Click "Update"</li>
+            <li>Confirm the change</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Delete Master Branch</h2>
+        <p><a href="https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/branches" target="_blank">👉 Click here to go to Branches Page</a></p>
+        <ol>
+            <li>Find the <strong>master</strong> branch in the list</li>
+            <li>Click the 🗑️ trash icon next to it</li>
+            <li>Confirm "Delete"</li>
+        </ol>
+    </div>
+
+    <div class="step success">
+        <h2>✅ Done!</h2>
+        <p>Your repository will now have only the <strong>main</strong> branch.</p>
+    </div>
+
+    <script>
+        // Track progress
+        let step1Done = false;
+        let step2Done = false;
+
+        // Check if main is default
+        fetch('https://api.github.com/repos/saibalajisinghrajput-glitch/Scalp-Max-')
+            .then(r => r.json())
+            .then(data => {
+                if (data.default_branch === 'main') {
+                    step1Done = true;
+                    document.querySelector('.warning').innerHTML = '✅ Step 1 Complete: main is now the default branch!';
+                }
+            })
+            .catch(e => console.log('Could not check branch status'));
+    </script>
+</body>
+</html>
+</parameter>

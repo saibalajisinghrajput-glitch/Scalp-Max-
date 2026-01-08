@@ -1,0 +1,13 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+
+# Push to master branch
+echo "Pushing to master branch..."
+git push origin master
+
+# Push to main branch as well
+echo "Pushing to main branch..."
+git push origin master:main
+
+echo "Done! Check https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/tree/main"
+</parameter>

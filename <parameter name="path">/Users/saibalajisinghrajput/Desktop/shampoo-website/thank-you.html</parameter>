@@ -1,0 +1,126 @@
+<parameter name="content"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Scalp Max</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Scalp Max</h1>
+            <p>Thank You for Your Order!</p>
+        </header>
+
+        <main>
+            <div class="thank-you-card">
+                <div class="success-icon">✓</div>
+                <h2>Order Placed Successfully!</h2>
+                <p class="order-id">Order ID: <span id="orderId">Loading...</span></p>
+                
+                <div class="order-status">
+                    <div class="status-badge pending" id="statusBadge">Payment Pending</div>
+
+                <div class="instructions">
+                    <h3>Next Steps:</h3>
+                    <div id="paymentInstructions">
+                        <p>📱 Please complete your payment via UPI or Bank Transfer.</p>
+                        <p>💳 UPI ID: <strong>scalpmax@upi</strong></p>
+                        <p>💵 Amount: <strong>₹1,499</strong></p>
+                    </div>
+                    <div id="codInstructions" style="display:none;">
+                        <p>💵 You chose Cash on Delivery.</p>
+                        <p>📦 You will receive your package soon!</p>
+                    </div>
+
+                <button id="confirmPayment" class="btn-primary btn-full">I Have Completed Payment</button>
+                
+                <div id="confirmationMessage" class="confirmation-message" style="display:none;">
+                    <div class="success-animation">✓</div>
+                    <h3>Payment Confirmed!</h3>
+                    <p>Your order is now being processed.</p>
+                </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Scalp Max. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="config.js"></script>
+    <script>
+        let currentOrderId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            currentOrderId = localStorage.getItem('lastOrderId');
+            
+            if (!currentOrderId) {
+                document.getElementById('orderId').textContent = 'Not found';
+                return;
+            }
+
+            document.getElementById('orderId').textContent = currentOrderId;
+
+            // Fetch order status
+            try {
+                const { data: order, error } = await supabaseClient
+                    .from('orders')
+                    .select('*')
+                    .eq('id', currentOrderId)
+                    .single();
+
+                if (error) throw error;
+
+                if (order) {
+                    updateUI(order);
+                }
+            } catch (err) {
+                console.error('Error fetching order:', err);
+            }
+        });
+
+        document.getElementById('confirmPayment').addEventListener('click', async () => {
+            if (!currentOrderId) return;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('orders')
+                    .update({ status: 'confirmed', paymentConfirmedAt: new Date().toISOString() })
+                    .eq('id', currentOrderId)
+                    .select();
+
+                if (error) throw error;
+
+                document.getElementById('confirmPayment').style.display = 'none';
+                document.getElementById('confirmationMessage').style.display = 'block';
+                document.getElementById('statusBadge').textContent = 'Payment Confirmed';
+                document.getElementById('statusBadge').className = 'status-badge confirmed';
+                
+                localStorage.removeItem('lastOrderId');
+            } catch (err) {
+                console.error('Error confirming payment:', err);
+                alert('Error confirming payment. Please try again.');
+            }
+        });
+
+        function updateUI(order) {
+            if (order.status === 'confirmed') {
+                document.getElementById('confirmPayment').style.display = 'none';
+                document.getElementById('confirmationMessage').style.display = 'block';
+                document.getElementById('statusBadge').textContent = 'Payment Confirmed';
+                document.getElementById('statusBadge').className = 'status-badge confirmed';
+            }
+
+            if (order.paymentMethod === 'cod') {
+                document.getElementById('paymentInstructions').style.display = 'none';
+                document.getElementById('codInstructions').style.display = 'block';
+                document.getElementById('confirmPayment').textContent = 'Order Confirmed';
+                document.getElementById('confirmPayment').disabled = true;
+                document.getElementById('statusBadge').textContent = 'Processing';
+            }
+        }
+    </script>
+</body>
+</html></parameter>
