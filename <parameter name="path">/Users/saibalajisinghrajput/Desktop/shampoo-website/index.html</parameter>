@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scalp Max - Premium Hair Care</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="container">
@@ -12,14 +13,12 @@
             <h1>Scalp Max</h1>
             <p>Premium Hair Care Products</p>
         </header>
-
         <main>
             <div class="product-card">
                 <img src="product-image.png" alt="Scalp Max Product" class="product-image">
                 <h2>Scalp Max Hair Care Kit</h2>
                 <p class="price">₹1,499</p>
                 <p class="description">Transform your hair with our premium scalp care solution.</p>
-                
                 <div class="features">
                     <h3>Features:</h3>
                     <ul>
@@ -29,17 +28,13 @@
                         <li>Improves Scalp Health</li>
                     </ul>
                 </div>
-
                 <button id="buyNow" class="btn-primary">Buy Now</button>
             </div>
         </main>
-
         <footer>
             <p>&copy; 2024 Scalp Max. All rights reserved.</p>
         </footer>
     </div>
-
     <script src="script.js"></script>
-    <script src="config.js"></script>
 </body>
 </html></parameter>

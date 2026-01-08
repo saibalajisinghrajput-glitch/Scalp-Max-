@@ -24,39 +24,57 @@
 
                 <form id="checkoutForm">
                     <div class="form-group">
-                        <label for="name">Full Name</label>
+                        <label for="name">Full Name *</label>
                         <input type="text" id="name" name="name" required placeholder="Enter your full name">
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Phone Number</label>
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
                         <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <input type="text" id="state" name="state" required placeholder="State">
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Pincode *</label>
+                            <input type="text" id="pincode" name="pincode" required placeholder="Pincode">
+                        </div>
+
                     <div class="form-group">
-                        <label for="address">Delivery Address</label>
-                        <textarea id="address" name="address" required placeholder="Enter your delivery address"></textarea>
+                        <label for="address">Full Address *</label>
+                        <textarea id="address" name="address" required placeholder="Enter your complete delivery address" rows="3"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Payment Method</label>
+                        <label>Payment Method *</label>
                         <div class="payment-options">
                             <label class="payment-option">
-                                <input type="radio" name="payment" value="upi" checked>
-                                <span>📱 UPI</span>
+                                <input type="radio" name="payment" value="UPI" checked>
+                                <span>UPI</span>
                             </label>
                             <label class="payment-option">
-                                <input type="radio" name="payment" value="cod">
-                                <span>💵 Cash on Delivery</span>
+                                <input type="radio" name="payment" value="COD">
+                                <span>Cash on Delivery</span>
                             </label>
                         </div>
 
                     <div id="paymentDetails" class="payment-details">
                         <h4>Payment Details</h4>
-                        <p>Scan QR Code or Transfer to:</p>
+                        <p>Transfer ₹1,499 to:</p>
                         <div class="qr-placeholder">
-                            <p>📱 UPI ID: <strong>scalpmax@upi</strong></p>
-                            <p>💳 Account: <strong>1234 5678 9012 3456</strong></p>
+                            <p>UPI ID: <strong>scalpmax@upi</strong></p>
                         </div>
 
                     <button type="submit" class="btn-primary btn-full">Place Order - ₹1,499</button>
@@ -76,33 +94,60 @@
             e.preventDefault();
             
             const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const address = document.getElementById('address').value;
-            const payment = document.querySelector('input[name="payment"]:checked').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            
+            // Get current date and time
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0];
+            const timeStr = now.toTimeString().split(' ')[0];
+            const orderId = 'ORD-' + Date.now();
 
             const orderData = {
-                name,
-                phone,
-                address,
-                paymentMethod: payment,
-                amount: 1499,
+                order_id: orderId,
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                quantity: '1',
+                total: '1499',
+                payment: paymentMethod,
                 status: 'pending',
-                createdAt: new Date().toISOString()
+                created_at: now.toISOString(),
+                date: dateStr,
+                time: timeStr
             };
+
+            console.log('Sending order data:', orderData);
 
             try {
                 const { data, error } = await supabaseClient
                     .from('orders')
                     .insert(orderData);
 
-                if (error) throw error;
+                if (error) {
+                    console.error('Supabase error:', error);
+                    alert('Error: ' + error.message);
+                    return;
+                }
 
+                console.log('Order saved successfully:', data);
+                
                 // Store order ID and redirect
-                localStorage.setItem('lastOrderId', data[0].id);
+                localStorage.setItem('lastOrderId', orderId);
+                localStorage.setItem('paymentMethod', paymentMethod);
                 window.location.href = 'thank-you.html';
             } catch (err) {
                 console.error('Error placing order:', err);
-                alert('Error placing order. Please try again.');
+                alert('Error placing order. Please try again. Check console for details.');
             }
         });
     </script>

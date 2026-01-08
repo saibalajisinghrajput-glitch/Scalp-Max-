@@ -25,13 +25,13 @@
                 <div class="instructions">
                     <h3>Next Steps:</h3>
                     <div id="paymentInstructions">
-                        <p>📱 Please complete your payment via UPI or Bank Transfer.</p>
-                        <p>💳 UPI ID: <strong>scalpmax@upi</strong></p>
-                        <p>💵 Amount: <strong>₹1,499</strong></p>
+                        <p>Please complete your payment via UPI.</p>
+                        <p>UPI ID: <strong>scalpmax@upi</strong></p>
+                        <p>Amount: <strong>₹1,499</strong></p>
                     </div>
                     <div id="codInstructions" style="display:none;">
-                        <p>💵 You chose Cash on Delivery.</p>
-                        <p>📦 You will receive your package soon!</p>
+                        <p>You chose Cash on Delivery.</p>
+                        <p>You will receive your package soon!</p>
                     </div>
 
                 <button id="confirmPayment" class="btn-primary btn-full">I Have Completed Payment</button>
@@ -55,6 +55,7 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             currentOrderId = localStorage.getItem('lastOrderId');
+            const paymentMethod = localStorage.getItem('paymentMethod');
             
             if (!currentOrderId) {
                 document.getElementById('orderId').textContent = 'Not found';
@@ -63,18 +64,27 @@
 
             document.getElementById('orderId').textContent = currentOrderId;
 
-            // Fetch order status
+            // Show appropriate instructions based on payment method
+            if (paymentMethod === 'COD') {
+                document.getElementById('paymentInstructions').style.display = 'none';
+                document.getElementById('codInstructions').style.display = 'block';
+                document.getElementById('confirmPayment').textContent = 'Order Confirmed';
+                document.getElementById('confirmPayment').disabled = true;
+                document.getElementById('statusBadge').textContent = 'Processing';
+            }
+
+            // Fetch order status from Supabase
             try {
-                const { data: order, error } = await supabaseClient
+                const { data: orders, error } = await supabaseClient
                     .from('orders')
                     .select('*')
-                    .eq('id', currentOrderId)
+                    .eq('order_id', currentOrderId)
                     .single();
 
-                if (error) throw error;
-
-                if (order) {
-                    updateUI(order);
+                if (error) {
+                    console.error('Error fetching order:', error);
+                } else if (orders) {
+                    updateUI(orders);
                 }
             } catch (err) {
                 console.error('Error fetching order:', err);
@@ -87,18 +97,27 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('orders')
-                    .update({ status: 'confirmed', paymentConfirmedAt: new Date().toISOString() })
-                    .eq('id', currentOrderId)
+                    .update({ 
+                        status: 'confirmed',
+                        payment: 'Paid'
+                    })
+                    .eq('order_id', currentOrderId)
                     .select();
 
-                if (error) throw error;
+                if (error) {
+                    console.error('Error updating order:', error);
+                    alert('Error confirming payment. Please try again.');
+                    return;
+                }
 
                 document.getElementById('confirmPayment').style.display = 'none';
                 document.getElementById('confirmationMessage').style.display = 'block';
                 document.getElementById('statusBadge').textContent = 'Payment Confirmed';
                 document.getElementById('statusBadge').className = 'status-badge confirmed';
                 
+                // Clear localStorage
                 localStorage.removeItem('lastOrderId');
+                localStorage.removeItem('paymentMethod');
             } catch (err) {
                 console.error('Error confirming payment:', err);
                 alert('Error confirming payment. Please try again.');
@@ -106,19 +125,14 @@
         });
 
         function updateUI(order) {
+            // Update status badge
             if (order.status === 'confirmed') {
                 document.getElementById('confirmPayment').style.display = 'none';
                 document.getElementById('confirmationMessage').style.display = 'block';
                 document.getElementById('statusBadge').textContent = 'Payment Confirmed';
                 document.getElementById('statusBadge').className = 'status-badge confirmed';
-            }
-
-            if (order.paymentMethod === 'cod') {
-                document.getElementById('paymentInstructions').style.display = 'none';
-                document.getElementById('codInstructions').style.display = 'block';
-                document.getElementById('confirmPayment').textContent = 'Order Confirmed';
-                document.getElementById('confirmPayment').disabled = true;
-                document.getElementById('statusBadge').textContent = 'Processing';
+            } else if (order.status === 'pending') {
+                document.getElementById('statusBadge').textContent = 'Payment Pending';
             }
         }
     </script>
