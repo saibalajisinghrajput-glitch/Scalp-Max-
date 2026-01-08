@@ -1,0 +1,28 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+
+echo "=== Git Setup & Push ==="
+
+# Set git user config
+git config user.email "saibalajisinghrajput@gmail.com"
+git config user.name "SAIBALAJISINGH RAJPUT"
+
+# Stage all changes
+echo "Staging files..."
+git add .
+
+# Commit
+echo "Committing..."
+git commit -m "Fix Supabase URL - correct project URL"
+
+# Get current branch name
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "Current branch: $BRANCH"
+
+# Push to GitHub
+echo "Pushing to GitHub..."
+git push origin $BRANCH
+
+echo ""
+echo "=== Done! ==="
+</parameter>

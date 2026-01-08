@@ -1,0 +1,4 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+rm -f push.sh push_to_main.sh commit_push.sh push_to_both_branches.sh delete_master.sh delete_master_branch.md TODO.md test-connection.html
+</parameter>

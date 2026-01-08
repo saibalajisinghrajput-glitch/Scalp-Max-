@@ -1,0 +1,442 @@
+const PRODUCT_PRICE = 499;
+
+let cart = {
+    items: [],
+    quantity: 1,
+    total: 499
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWebsite();
+});
+
+function initializeWebsite() {
+    updateCartCount();
+    addScrollAnimations();
+    initializeFAQ();
+    initSmoothScroll();
+}
+
+function addToCart() {
+    cart.quantity = parseInt(document.getElementById('quantity').textContent);
+    cart.total = cart.quantity * PRODUCT_PRICE;
+    updateCartCount();
+    showToast('Added to cart successfully!');
+}
+
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.textContent = cart.quantity;
+    }
+    updateCartModal();
+}
+
+function viewCart() {
+    const modal = document.getElementById('cartModal');
+    if (modal) {
+        modal.classList.add('active');
+        updateCartModal();
+    }
+}
+
+function closeCart() {
+    const modal = document.getElementById('cartModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+function updateCartModal() {
+    const cartQuantity = document.getElementById('cartQuantity');
+    const cartItemTotal = document.getElementById('cartItemTotal');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    if (cartQuantity) cartQuantity.textContent = cart.quantity;
+    if (cartItemTotal) cartItemTotal.textContent = '₹' + (cart.quantity * PRODUCT_PRICE);
+    if (cartTotal) cartTotal.textContent = '₹' + (cart.quantity * PRODUCT_PRICE);
+}
+
+function prepareOrder(event) {
+    event.preventDefault();
+    cart.quantity = parseInt(document.getElementById('quantity').textContent);
+    cart.total = cart.quantity * PRODUCT_PRICE;
+    localStorage.setItem('orderQuantity', cart.quantity);
+    localStorage.setItem('orderTotal', cart.total);
+    window.location.href = 'checkout.html';
+}
+
+function changeQuantity(change) {
+    const quantityElement = document.getElementById('quantity');
+    const totalPriceElement = document.getElementById('total-price');
+    
+    if (quantityElement && totalPriceElement) {
+        let currentQuantity = parseInt(quantityElement.textContent);
+        let newQuantity = currentQuantity + change;
+        
+        if (newQuantity >= 1 && newQuantity <= 10) {
+            quantityElement.textContent = newQuantity;
+            totalPriceElement.textContent = '₹' + (newQuantity * PRODUCT_PRICE);
+        }
+    }
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.textContent = message;
+        toast.classList.add('active');
+        setTimeout(function() {
+            toast.classList.remove('active');
+        }, 3000);
+    }
+}
+
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+        mobileMenu.classList.toggle('active');
+    }
+}
+
+function toggleFaq(element) {
+    const faqItem = element.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    const allFaqItems = document.querySelectorAll('.faq-item');
+    allFaqItems.forEach(function(item) {
+        item.classList.remove('active');
+    });
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
+}
+
+function initializeFAQ() {}
+
+function initSmoothScroll() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                    }
+                }
+            }
+        });
+    });
+}
+
+function addScrollAnimations() {
+    const fadeElements = document.querySelectorAll('.feature-card, .benefit-item, .ingredient-card, .step, .review-card, .faq-item');
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    fadeElements.forEach(function(element) {
+        element.classList.add('fade-in');
+        observer.observe(element);
+    });
+}
+
+function saveOrder(orderData) {
+    try {
+        let orders = JSON.parse(localStorage.getItem('scalpMaxOrders') || '[]');
+        orders.unshift(orderData);
+        localStorage.setItem('scalpMaxOrders', JSON.stringify(orders));
+        console.log('✅ Order saved:', orderData.orderId);
+        return true;
+    } catch (e) {
+        console.error('❌ Save error:', e);
+        return false;
+    }
+}
+
+async function submitContactForm(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const phone = document.getElementById('contactPhone').value;
+    const message = document.getElementById('contactMessage').value;
+    
+    if (!name || !email || !phone || !message) {
+        showToast('Please fill in all fields');
+        return;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showToast('Please enter a valid email address');
+        return;
+    }
+    
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(phone.replace(/\D/g, ''))) {
+        showToast('Please enter a valid Indian phone number');
+        return;
+    }
+    
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Saving...';
+    submitBtn.disabled = true;
+    
+    // Save contact message to localStorage
+    const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+    messages.unshift({
+        name: name,
+        email: email,
+        phone: phone,
+        message: message,
+        date: new Date().toLocaleDateString('en-IN'),
+        time: new Date().toLocaleTimeString('en-IN')
+    });
+    localStorage.setItem('contactMessages', JSON.stringify(messages));
+    
+    showToast('Message saved! We will contact you soon.');
+    document.getElementById('contactForm').reset();
+    
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+}
+
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.padding = '10px 0';
+        navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.15)';
+    } else {
+        navbar.style.padding = '15px 0';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+    }
+});
+
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('cartModal');
+    const cartIcon = document.querySelector('.cart-icon');
+    
+    if (modal && modal.classList.contains('active')) {
+        if (!modal.contains(event.target) && !cartIcon.contains(event.target)) {
+            modal.classList.remove('active');
+        }
+    }
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('cartModal');
+        if (modal && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+        }
+    }
+});
+
+function preloadImages() {
+    const images = [
+        'https://images.unsplash.com/photo-1585232351009-31338186ce39?w=400',
+        'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500',
+        'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=200',
+        'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=200',
+        'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200',
+        'https://images.unsplash.com/photo-1600431521340-491eca880813?w=200',
+        'https://images.unsplash.com/photo-1628699326854-4c3e17598233?w=200',
+        'https://images.unsplash.com/photo-1595475207225-428b62bda831?w=200'
+    ];
+    
+    images.forEach(function(src) {
+        const img = new Image();
+        img.src = src;
+    });
+}
+
+preloadImages();
+
+function initCheckoutPage() {
+    const quantity = localStorage.getItem('orderQuantity') || 1;
+    const total = localStorage.getItem('orderTotal') || 499;
+    updateOrderSummary(quantity, total);
+    initCheckoutForm();
+    populateStates();
+}
+
+function updateOrderSummary(quantity, total) {
+    const summaryQuantity = document.getElementById('summaryQuantity');
+    const summaryTotal = document.getElementById('summaryTotal');
+    
+    if (summaryQuantity) summaryQuantity.textContent = quantity;
+    if (summaryTotal) summaryTotal.textContent = '₹' + total;
+}
+
+function initCheckoutForm() {
+    const form = document.getElementById('checkoutForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            processOrder();
+        });
+    }
+}
+
+function processOrder() {
+    const name = document.getElementById('customerName').value;
+    const email = document.getElementById('customerEmail').value;
+    const phone = document.getElementById('customerPhone').value;
+    const address = document.getElementById('customerAddress').value;
+    const city = document.getElementById('customerCity').value;
+    const state = document.getElementById('customerState').value;
+    const pincode = document.getElementById('customerPincode').value;
+    const paymentMethod = document.querySelector('input[name="payment"]:checked');
+    const transactionId = document.getElementById('transactionId') ? document.getElementById('transactionId').value : '';
+    
+    if (!name || !email || !phone || !address || !city || !state || !pincode) {
+        showToast('Please fill in all required fields');
+        return;
+    }
+    
+    if (!paymentMethod) {
+        showToast('Please select a payment method');
+        return;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showToast('Please enter a valid email address');
+        return;
+    }
+    
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(phone.replace(/\D/g, ''))) {
+        showToast('Please enter a valid Indian phone number');
+        return;
+    }
+    
+    const pincodeRegex = /^\d{6}$/;
+    if (!pincodeRegex.test(pincode)) {
+        showToast('Please enter a valid 6-digit PIN code');
+        return;
+    }
+    
+    const orderId = 'SM' + Date.now().toString().slice(-8);
+    const now = new Date();
+    
+    const orderDetails = {
+        orderId: orderId,
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        city: city,
+        state: state,
+        pincode: pincode,
+        paymentMethod: paymentMethod.value,
+        quantity: localStorage.getItem('orderQuantity') || 1,
+        total: localStorage.getItem('orderTotal') || 499,
+        date: now.toLocaleDateString('en-IN'),
+        time: now.toLocaleTimeString('en-IN'),
+        transactionId: transactionId,
+        status: 'New Order',
+        createdAt: now.toISOString()
+    };
+    
+    console.log('💾 Saving order:', orderDetails.orderId);
+    
+    // Save to localStorage
+    const saved = saveOrder(orderDetails);
+    
+    if (saved) {
+        showToast('Order placed successfully!');
+    } else {
+        showToast('Order placed! (Storage warning)');
+    }
+    
+    localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+    
+    setTimeout(function() {
+        window.location.href = 'thank-you.html';
+    }, 2000);
+}
+
+const indianStates = [
+    'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
+    'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya',
+    'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+    'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry',
+    'Andaman and Nicobar Islands', 'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep'
+];
+
+function populateStates() {
+    const stateSelect = document.getElementById('customerState');
+    if (stateSelect) {
+        indianStates.forEach(function(state) {
+            const option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        });
+    }
+}
+
+const majorCities = [
+    'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow',
+    'Kanpur', 'Nagpur', 'Indore', 'Thane', 'Bhopal', 'Visakhapatnam', 'Patna', 'Vadodara', 'Ghaziabad', 'Ludhiana',
+    'Agra', 'Nashik', 'Faridabad', 'Meerut', 'Rajkot', 'Varanasi', 'Srinagar', 'Aurangabad', 'Dhanbad', 'Amritsar',
+    'Navi Mumbai', 'Allahabad', 'Howrah', 'Ranchi', 'Jabalpur', 'Gwalior', 'Jodhpur', 'Madurai', 'Raipur', 'Chandigarh',
+    'Guwahati', 'Coimbatore', 'Mysore', 'Tiruchirappalli', 'Bareilly', 'Aligarh', 'Tiruppur', 'Gurgaon', 'Moradabad',
+    'Jalandhar', 'Bhubaneswar', 'Warangal', 'Salem', 'Vijayawada', 'Firozabad', 'Kochi', 'Bhiwandi', 'Saharanpur',
+    'Gorakhpur', 'Bikaner', 'Noida', 'Jamshedpur', 'Bhilai', 'Cuttack', 'Firozpur', 'Bhavnagar', 'Rourkela', 'Durgapur',
+    'Asansol', 'Ajmer', 'Ujjain', 'Siliguri', 'Jhansi', 'Sangli'
+];
+
+function filterCities(input, dropdownId) {
+    const inputVal = input.value.toLowerCase();
+    const dropdown = document.getElementById(dropdownId);
+    
+    if (dropdown) {
+        dropdown.innerHTML = '';
+        
+        if (inputVal.length > 0) {
+            const filteredCities = majorCities.filter(function(city) {
+                return city.toLowerCase().includes(inputVal);
+            });
+            
+            filteredCities.forEach(function(city) {
+                const option = document.createElement('option');
+                option.value = city;
+                dropdown.appendChild(option);
+            });
+        }
+    }
+}
+
+window.addToCart = addToCart;
+window.viewCart = viewCart;
+window.closeCart = closeCart;
+window.changeQuantity = changeQuantity;
+window.toggleMobileMenu = toggleMobileMenu;
+window.toggleFaq = toggleFaq;
+window.submitContactForm = submitContactForm;
+window.prepareOrder = prepareOrder;
+window.initCheckoutPage = initCheckoutPage;
+window.processOrder = processOrder;
+window.populateStates = populateStates;
+window.filterCities = filterCities;
+window.saveOrder = saveOrder;
+

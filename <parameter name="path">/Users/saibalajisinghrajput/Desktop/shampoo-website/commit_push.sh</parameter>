@@ -1,0 +1,6 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git add -A
+git commit -m "Fix payment confirmation flow - orders now recording in Supabase"
+git push origin master
+</parameter>

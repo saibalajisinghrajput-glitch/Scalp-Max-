@@ -1,0 +1,8 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git config user.email "saibalajisinghrajput@gmail.com"
+git config user.name "SAIBALAJISINGH RAJPUT"
+git add test-connection.html SUPABASE_RLS.sql
+git commit -m "Add Supabase test page and RLS fix SQL"
+git push origin main
+echo "Done!"</parameter>

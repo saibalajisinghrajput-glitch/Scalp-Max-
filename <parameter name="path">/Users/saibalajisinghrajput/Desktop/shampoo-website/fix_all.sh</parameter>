@@ -1,0 +1,45 @@
+<parameter name="content">#!/bin/bash
+
+echo "🧹 Cleaning up shampoo-website..."
+
+# Navigate to project
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+
+# Delete unwanted files
+rm -f push.sh
+rm -f push_to_main.sh
+rm -f commit_push.sh
+rm -f push_to_both_branches.sh
+rm -f delete_master.sh
+rm -f delete_master_branch.md
+rm -f TODO.md
+rm -f test-connection.html
+rm -f cleanup.sh
+
+# Clean up git
+rm -rf .git
+
+# Reinitialize git
+git init
+git add -A
+git commit -m "Clean website with proper payment flow"
+
+# Push to main (and master if needed)
+git remote add origin https://github.com/saibalajisinghrajput-glitch/Scalp-Max-.git
+git push -u origin main || git push -u origin master
+
+# Set main as default and delete master via GitHub API (if gh is available)
+if command -v gh &> /dev/null; then
+    echo "🌐 Deleting master branch on GitHub..."
+    gh api repos/saibalajisinghrajput-glitch/Scalp-Max- -X PATCH -f default_branch=main 2>/dev/null || true
+    gh api repos/saibalajisinghrajput-glitch/Scalp-Max-/git/refs/heads/master -X DELETE 2>/dev/null || true
+fi
+
+echo "✅ Done!"
+echo ""
+echo "📝 Manual step needed - delete master branch:"
+echo "1. Go to https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/settings/branches"
+echo "2. Set main as default branch"
+echo "3. Go to https://github.com/saibalajisinghrajput-glitch/Scalp-Max-/branches"
+echo "4. Delete master branch"
+</parameter>

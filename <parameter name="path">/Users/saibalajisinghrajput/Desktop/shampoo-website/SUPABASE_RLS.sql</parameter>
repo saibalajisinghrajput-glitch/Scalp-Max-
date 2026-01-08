@@ -1,0 +1,38 @@
+<parameter name="content">-- Supabase SQL to fix RLS and allow orders to be saved
+-- Run this in your Supabase Dashboard → SQL Editor
+
+-- Step 1: Enable RLS on orders table
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+-- Step 2: Create policy to allow anyone to insert orders
+-- This allows anonymous users to create orders
+CREATE POLICY "Allow anonymous inserts" ON orders
+FOR INSERT
+WITH CHECK (true);
+
+-- Step 3: Create policy to allow anyone to view their own orders
+-- This allows viewing orders (optional)
+CREATE POLICY "Allow public select" ON orders
+FOR SELECT
+USING (true);
+
+-- Alternative: If you want only authenticated users, use this instead:
+-- CREATE POLICY "Allow authenticated inserts" ON orders
+-- FOR INSERT
+-- WITH CHECK (auth.role() = 'authenticated');
+
+-- To check existing policies:
+-- SELECT * FROM pg_policies WHERE tablename = 'orders';
+
+-- To delete all existing policies and start fresh:
+-- DROP POLICY IF EXISTS "Enable all access for authenticated users" ON orders;
+-- DROP POLICY IF EXISTS "Enable insert for authenticated users" ON orders;
+-- DROP POLICY IF EXISTS "Enable read access for authenticated users" ON orders;
+-- DROP POLICY IF EXISTS "Allow anonymous inserts" ON orders;
+-- DROP POLICY IF EXISTS "Allow public select" ON orders;
+
+-- Verify the table structure matches:
+-- SELECT column_name, data_type 
+-- FROM information_schema.columns 
+-- WHERE table_name = 'orders'
+-- ORDER BY ordinal_position;</parameter>

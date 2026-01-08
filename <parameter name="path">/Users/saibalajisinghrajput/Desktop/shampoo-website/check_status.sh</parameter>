@@ -1,0 +1,13 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+echo "=== Git Status ==="
+git status
+echo ""
+echo "=== Current Branch ==="
+git branch
+echo ""
+echo "=== GitHub Remote ==="
+git remote -v
+echo ""
+echo "=== Recent Commits ==="
+git log --oneline -5</parameter>

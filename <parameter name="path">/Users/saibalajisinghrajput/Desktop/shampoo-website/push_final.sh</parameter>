@@ -1,0 +1,5 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git add .
+git commit -m "Fix Supabase integration - use real credentials and correct table fields"
+git push origin main</parameter>

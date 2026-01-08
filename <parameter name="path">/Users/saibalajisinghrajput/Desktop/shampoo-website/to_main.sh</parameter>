@@ -1,0 +1,5 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git branch -m master main
+git push origin main
+echo "Branch renamed to main and pushed!"</parameter>

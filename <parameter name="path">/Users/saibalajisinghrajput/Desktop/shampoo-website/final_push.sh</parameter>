@@ -1,0 +1,3 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git push origin main --set-upstream</parameter>

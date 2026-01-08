@@ -1,0 +1,6 @@
+<parameter name="content">#!/bin/bash
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git add -A
+git commit -m "Update Supabase config and add test page"
+git push origin main
+echo "Pushed to GitHub!"</parameter>

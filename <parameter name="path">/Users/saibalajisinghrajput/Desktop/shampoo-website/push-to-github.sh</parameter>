@@ -1,0 +1,8 @@
+<parameter name="content">#!/bin/bash
+echo "Pushing clean code to GitHub main branch..."
+cd /Users/saibalajisinghrajput/Desktop/shampoo-website
+git add .
+git commit -m "Clean commit - removed bloated files"
+git push -u origin main
+echo "Done! Check your GitHub repository."
+</parameter>

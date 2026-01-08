@@ -1,0 +1,155 @@
+<parameter name="content"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Scalp Max</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Scalp Max - Checkout</h1>
+            <p>Complete Your Order</p>
+        </header>
+
+        <main>
+            <div class="checkout-card">
+                <div class="product-summary">
+                    <img src="product-image.png" alt="Scalp Max Product" class="product-thumb">
+                    <div>
+                        <h3>Scalp Max Hair Care Kit</h3>
+                        <p class="price">₹1,499</p>
+                    </div>
+
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <input type="text" id="state" name="state" required placeholder="State">
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Pincode *</label>
+                            <input type="text" id="pincode" name="pincode" required placeholder="Pincode">
+                        </div>
+
+                    <div class="form-group">
+                        <label for="address">Full Address *</label>
+                        <textarea id="address" name="address" required placeholder="Enter your complete delivery address" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payment Method *</label>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="UPI" checked>
+                                <span>UPI</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="COD">
+                                <span>Cash on Delivery</span>
+                            </label>
+                        </div>
+
+                    <div id="paymentDetails" class="payment-details">
+                        <h4>Payment Details</h4>
+                        <p>Transfer ₹1,499 to:</p>
+                        <div class="qr-placeholder">
+                            <p>UPI ID: <strong>scalpmax@upi</strong></p>
+                        </div>
+
+                    <button type="submit" class="btn-primary btn-full">Place Order - ₹1,499</button>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Scalp Max. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="config.js"></script>
+    <script>
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            
+            // Get current date and time
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0];
+            const timeStr = now.toTimeString().split(' ')[0];
+            const orderId = 'ORD-' + Date.now();
+
+            const orderData = {
+                order_id: orderId,
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                quantity: '1',
+                total: '1499',
+                payment: paymentMethod,
+                status: 'pending',
+                created_at: now.toISOString(),
+                date: dateStr,
+                time: timeStr
+            };
+
+            console.log('Sending order data:', orderData);
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('orders')
+                    .insert(orderData);
+
+                if (error) {
+                    console.error('Supabase error:', error);
+                    alert('Error: ' + error.message);
+                    return;
+                }
+
+                console.log('Order saved successfully:', data);
+                
+                // Store order ID and redirect
+                localStorage.setItem('lastOrderId', orderId);
+                localStorage.setItem('paymentMethod', paymentMethod);
+                window.location.href = 'thank-you.html';
+            } catch (err) {
+                console.error('Error placing order:', err);
+                alert('Error placing order. Please try again. Check console for details.');
+            }
+        });
+    </script>
+</body>
+</html></parameter>
