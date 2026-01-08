@@ -470,6 +470,7 @@
                                 <label>Phone Number *</label>
                                 <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                             </div>
+                        </div>
                     </div>
                     
                     <!-- Delivery Address -->
@@ -490,10 +491,13 @@
                                 <label>State *</label>
                                 <input type="text" id="state" name="state" required placeholder="State">
                             </div>
+                        </div>
+                        <div class="form-group-row">
                             <div class="form-group">
                                 <label>Pincode *</label>
                                 <input type="text" id="pincode" name="pincode" required placeholder="Pincode">
                             </div>
+                        </div>
                     </div>
                     
                     <!-- Payment Method -->
@@ -539,6 +543,7 @@
                                 <p>UPI ID</p>
                                 <p class="upi-id">saibalajisinghrajput@oksbi</p>
                             </div>
+                        </div>
                         
                         <div id="codDetails" class="payment-details-box hidden">
                             <h4><i class="fas fa-money-bill-wave"></i> Cash on Delivery</h4>
@@ -553,13 +558,14 @@
                             <h4><i class="fab fa-whatsapp"></i> Order via WhatsApp</h4>
                             <p>Click below to send your order on WhatsApp:</p>
                             <div style="margin-top: 15px;">
-                                <a href="https://wa.me/919010988498?text=Hi,%20I%20want%20to%20order%20Scalp%20Max%20Hair%20Care%20Kit.%20Price:%20₹499" 
-                                   target="_blank" class="whatsapp-btn">
+                                <a id="whatsappLink" href="#" target="_blank" class="whatsapp-btn">
                                     <i class="fab fa-whatsapp"></i>
                                     Order on WhatsApp
                                 </a>
                             </div>
+                        </div>
                     </div>
+                </div>
                 
                 <!-- Right Column - Order Summary -->
                 <div class="order-summary">
@@ -572,6 +578,7 @@
                             <p>Advanced formula for hair growth</p>
                             <span class="order-item-price">₹499</span>
                         </div>
+                    </div>
                     
                     <div class="price-breakdown">
                         <div class="price-row">
@@ -590,6 +597,7 @@
                             <span>Total</span>
                             <span>₹499</span>
                         </div>
+                    </div>
                     
                     <button type="submit" class="place-order-btn">
                         <i class="fas fa-check-circle"></i>
@@ -606,6 +614,7 @@
                         <i class="fas fa-lock"></i> Your information is secure and encrypted
                     </p>
                 </div>
+            </div>
         </form>
     </div>
 
@@ -632,10 +641,12 @@
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
+                </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Scalp Max. All rights reserved. Made with <i class="fas fa-heart"></i> for your hair.</p>
             </div>
+        </div>
     </footer>
 
     <!-- Scripts -->
@@ -661,6 +672,7 @@
                 document.getElementById('codDetails').classList.remove('hidden');
             } else if (method === 'WHATSAPP') {
                 document.getElementById('whatsappDetails').classList.remove('hidden');
+                updateWhatsAppLink();
             }
         }
 
@@ -668,6 +680,46 @@
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.classList.toggle('active');
+        }
+
+        // Update WhatsApp link with form data
+        function updateWhatsAppLink() {
+            const name = document.getElementById('name').value || 'Your Name';
+            const email = document.getElementById('email').value || 'your@email.com';
+            const phone = document.getElementById('phone').value || 'Your Phone';
+            const address = document.getElementById('address').value || 'Your Address';
+            const city = document.getElementById('city').value || 'Your City';
+            const state = document.getElementById('state').value || 'Your State';
+            const pincode = document.getElementById('pincode').value || '000000';
+
+            const message = `NEW ORDER - SCALP MAX
+━━━━━━━━━━━━━━━━━━━━
+👤 CUSTOMER DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+
+━━━━━━━━━━━━━━━━━━━━
+📍 SHIPPING ADDRESS
+━━━━━━━━━━━━━━━━━━━━
+${address}
+Landmark: ${city}
+${city.toUpperCase()}, ${state.toUpperCase()} - ${pincode}
+
+━━━━━━━━━━━━━━━━━━━━
+🛒 ORDER DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Product: SCALP MAX Anti Dandruff Scalp Therapy Shampoo
+Quantity: 1
+Total: ₹499
+Shipping: FREE
+
+━━━━━━━━━━━━━━━━━━━━
+Please confirm this order and share payment details`;
+
+            const whatsappLink = document.getElementById('whatsappLink');
+            whatsappLink.href = `https://wa.me/919010988498?text=${encodeURIComponent(message)}`;
         }
 
         // Checkout form handler
@@ -706,7 +758,31 @@
 
             // For WhatsApp orders, redirect to WhatsApp
             if (paymentMethod === 'WHATSAPP') {
-                const message = `Hi, I want to order Scalp Max Hair Care Kit.\n\nOrder Details:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}, ${city}, ${state} - ${pincode}\nEmail: ${email}\nPayment: WhatsApp\n\nPlease confirm my order.`;
+                const message = `NEW ORDER - SCALP MAX
+━━━━━━━━━━━━━━━━━━━━
+👤 CUSTOMER DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+
+━━━━━━━━━━━━━━━━━━━━
+📍 SHIPPING ADDRESS
+━━━━━━━━━━━━━━━━━━━━
+${address}
+Landmark: ${city}
+${city.toUpperCase()}, ${state.toUpperCase()} - ${pincode}
+
+━━━━━━━━━━━━━━━━━━━━
+🛒 ORDER DETAILS
+━━━━━━━━━━━━━━━━━━━━
+Product: SCALP MAX Anti Dandruff Scalp Therapy Shampoo
+Quantity: 1
+Total: ₹499
+Shipping: FREE
+
+━━━━━━━━━━━━━━━━━━━━
+Please confirm this order and share payment details`;
                 window.open(`https://wa.me/919010988498?text=${encodeURIComponent(message)}`, '_blank');
                 return;
             }
@@ -730,6 +806,21 @@
                 window.location.href = 'thank-you.html';
             }
         });
+
+        // Update WhatsApp link when form fields change
+        document.getElementById('checkoutForm').addEventListener('input', function() {
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            if (paymentMethod === 'WHATSAPP') {
+                updateWhatsAppLink();
+            }
+        });
+
+        // Update cart count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantity = localStorage.getItem('orderQuantity') || 1;
+            document.getElementById('cart-count').textContent = quantity;
+        });
     </script>
 </body>
 </html>
+
