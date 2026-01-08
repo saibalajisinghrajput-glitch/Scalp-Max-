@@ -700,13 +700,10 @@
             localStorage.setItem('allOrders', JSON.stringify(orders));
             localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
             
-            // Show success
-            alert('Order placed successfully! Redirecting to thank you page...');
-            
-            // Redirect after short delay
+            // Redirect directly to thank you page
             setTimeout(function() {
                 window.location.href = 'thank-you.html';
-            }, 1000);
+            }, 500);
         }
 
         // Generate unique order ID
