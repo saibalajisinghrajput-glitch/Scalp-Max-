@@ -1,0 +1,6 @@
+<parameter name="content">#!/bin/bash
+cd "$(dirname "$0")"
+git add checkout.html
+git commit -m "Add Place Order buttons to UPI and COD payment sections"
+git push origin main
+</parameter>
