@@ -8,34 +8,24 @@ ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment TEXT;
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
 
 -- Step 2: Fix created_at to be TIMESTAMPTZ (this fixes the null issue)
--- First check current type
-SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'orders';
-
--- If created_at is text, convert it
+-- This converts the column type so timestamps work properly
 ALTER TABLE orders ALTER COLUMN created_at TYPE TIMESTAMPTZ;
 
--- Update any null created_at values
+-- Update any null created_at values with current time
 UPDATE orders SET created_at = NOW() WHERE created_at IS NULL;
 
--- Set default value for new orders
+-- Set default value for new orders (this ensures new orders get timestamps automatically)
 ALTER TABLE orders ALTER COLUMN created_at SET DEFAULT NOW();
 
 -- Step 3: Add updated_at column if missing
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
 
--- Step 4: Enable RLS if not already enabled
-ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
-
--- Step 5: Create policies for the website
-CREATE POLICY IF NOT EXISTS "Allow public inserts" ON orders FOR INSERT TO anon WITH CHECK (true);
-CREATE POLICY IF NOT EXISTS "Allow public reads" ON orders FOR SELECT TO anon USING (true);
-
--- Step 6: Verify the table structure
+-- Step 4: Verify the table structure
 SELECT column_name, data_type, is_nullable, column_default
 FROM information_schema.columns
 WHERE table_name = 'orders'
 ORDER BY ordinal_position;
 
--- Step 7: Check sample data
+-- Step 5: Check sample data with timestamps
 SELECT order_id, created_at, status, payment FROM orders LIMIT 5;
 
