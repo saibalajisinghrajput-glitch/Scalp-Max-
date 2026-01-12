@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ter name="content"><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -231,10 +231,55 @@
         }
         
         .upi-id {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--primary-color);
             letter-spacing: 1px;
+            word-break: break-all;
+        }
+        
+        .upi-qr-container {
+            margin: 20px auto;
+        }
+        
+        .upi-qr-code {
+            display: inline-block;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .upi-qr-code img {
+            width: 180px;
+            height: 180px;
+            display: block;
+        }
+        
+        .upi-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+        }
+        
+        .upi-amount-label {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .upi-scan-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 12px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 8px;
+        }
+        
+        .upi-scan-text i {
+            color: #2e7d32;
+            margin-right: 5px;
         }
         
         .cod-details {
@@ -470,7 +515,6 @@
                                 <label>Phone Number *</label>
                                 <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                             </div>
-                        </div>
                     </div>
                     
                     <!-- Delivery Address -->
@@ -491,13 +535,11 @@
                                 <label>State *</label>
                                 <input type="text" id="state" name="state" required placeholder="State">
                             </div>
-                        </div>
                         <div class="form-group-row">
                             <div class="form-group">
                                 <label>Pincode *</label>
                                 <input type="text" id="pincode" name="pincode" required placeholder="Pincode">
                             </div>
-                        </div>
                     </div>
                     
                     <!-- Payment Method -->
@@ -535,23 +577,24 @@
                             </label>
                         </div>
                         
-        <!-- Payment Details -->
+                        <!-- UPI Payment Details with QR Code -->
                         <div id="upiDetails" class="payment-details-box">
                             <h4><i class="fas fa-qrcode"></i> Scan to Pay ₹499</h4>
-                            <p>Scan the QR code with any UPI app - amount will be auto-filled</p>
                             <div class="upi-details">
-                                <div style="margin: 20px 0;">
-                                    <img id="upiQRCode" src="" alt="UPI QR Code" style="width: 180px; height: 180px; display: block; margin: 0 auto;">
-                                </div>
-                                <p style="font-size: 1.5rem; font-weight: 700; color: #2d5a27; margin: 10px 0;">₹499</p>
-                                <p style="color: #28a745; font-size: 0.9rem;">Amount will be automatically pre-filled</p>
-                                <p class="upi-id" style="margin-top: 15px;">saibalajisinghrajput@oksbi</p>
-                                <p style="color: #888; font-size: 0.85rem; margin-top: 10px;">
-                                    <i class="fas fa-mobile-alt" style="color: #2d5a27;"></i> 
-                                    Just scan and enter PIN to pay
-                                </p>
+                                <p>Scan this QR code with any UPI app</p>
+                                <p class="upi-id">saibalajisinghrajput@oksbi</p>
+                                
+                                <div class="upi-qr-container">
+                                    <div class="upi-qr-code">
+                                        <img id="upiQRCode" src="" alt="UPI QR Code">
+                                    </div>
+                                    <div class="upi-amount">₹499</div>
+                                    <div class="upi-amount-label">Amount to Pay</div>
+                                    <div class="upi-scan-text">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        Open any UPI app & scan this QR code
+                                    </div>
                             </div>
-                        </div>
                         
                         <div id="codDetails" class="payment-details-box hidden">
                             <h4><i class="fas fa-money-bill-wave"></i> Cash on Delivery</h4>
@@ -571,9 +614,7 @@
                                     Order on WhatsApp
                                 </a>
                             </div>
-                        </div>
                     </div>
-                </div>
                 
                 <!-- Right Column - Order Summary -->
                 <div class="order-summary">
@@ -586,7 +627,6 @@
                             <p>Advanced formula for hair growth</p>
                             <span class="order-item-price">₹499</span>
                         </div>
-                    </div>
                     
                     <div class="price-breakdown">
                         <div class="price-row">
@@ -605,7 +645,6 @@
                             <span>Total</span>
                             <span>₹499</span>
                         </div>
-                    </div>
                     
                     <button type="submit" class="place-order-btn">
                         <i class="fas fa-check-circle"></i>
@@ -622,7 +661,6 @@
                         <i class="fas fa-lock"></i> Your information is secure and encrypted
                     </p>
                 </div>
-            </div>
         </form>
     </div>
 
@@ -649,17 +687,31 @@
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
-                </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Scalp Max. All rights reserved. Made with <i class="fas fa-heart"></i> for your hair.</p>
             </div>
-        </div>
     </footer>
 
     <!-- Scripts -->
     <script src="config.js"></script>
     <script>
+        // UPI Configuration
+        const UPI_ID = 'saibalajisinghrajput@oksbi';
+        const MERCHANT_NAME = 'Scalp Max';
+        const ORDER_AMOUNT = '499';
+        
+        // Generate UPI QR Code URL with amount
+        function generateUPIQRCode() {
+            // UPI deep link format with amount
+            const upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${ORDER_AMOUNT}&cu=INR&tn=OrderPayment`;
+            
+            // Use free QR code API to generate QR image
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
+            
+            document.getElementById('upiQRCode').src = qrApiUrl;
+        }
+
         // Payment method selection
         function selectPayment(method) {
             // Update UI
@@ -828,42 +880,9 @@ Please confirm this order and share payment details`;
             const quantity = localStorage.getItem('orderQuantity') || 1;
             document.getElementById('cart-count').textContent = quantity;
             
-            // Generate UPI QR Code with amount pre-filled
+            // Generate QR code on page load
             generateUPIQRCode();
         });
-
-        // Generate UPI QR Code with embedded amount
-        function generateUPIQRCode() {
-            const upiId = 'saibalajisinghrajput@oksbi';
-            const merchantName = 'Scalp Max';
-            const amount = '499';
-            
-            // UPI deep link format with amount (this makes amount auto-fill when scanned)
-            const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${amount}&cu=INR&tn=OrderPayment`;
-            
-            // Generate QR code image using free API
-            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
-            
-            const qrImage = document.getElementById('upiQRCode');
-            if (qrImage) {
-                qrImage.src = qrCodeUrl;
-                qrImage.onerror = function() {
-                    // Fallback if QR API fails
-                    this.src = 'data:image/svg+xml,' + encodeURIComponent(`
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-                            <rect fill="white" width="200" height="200"/>
-                            <text x="100" y="100" text-anchor="middle" font-size="12" fill="#333">
-                                QR Code
-                            </text>
-                            <text x="100" y="120" text-anchor="middle" font-size="10" fill="#666">
-                                Scan with UPI App
-                            </text>
-                        </svg>
-                    `);
-                };
-            }
-        }
     </script>
 </body>
 </html>
-
