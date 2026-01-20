@@ -9,6 +9,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Initialize Supabase Client
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Razorpay Configuration
+const RAZORPAY_KEY_ID = 'rzp_live_S5zdsZIeTZwPus';
+
+// Product Configuration
 const PRODUCT_PRICE = 499;
 const PRODUCT_NAME = "SCALP MAX Anti Dandruff Scalp Therapy Shampoo";
 const PRODUCT_SIZE = "300ml Bottle";

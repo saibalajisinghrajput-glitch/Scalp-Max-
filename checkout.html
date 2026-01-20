@@ -10,7 +10,120 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://checkout.razorpay.com/v1/razorpay.js"></script>
     <style>
+        .razorpay-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #3399cc;
+            color: white;
+            padding: 16px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(51, 153, 204, 0.3);
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .razorpay-btn:hover {
+            background: #2288bb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(51, 153, 204, 0.4);
+        }
+        
+        .razorpay-logo {
+            font-weight: 700;
+        }
+        
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .payment-methods-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .upi-app-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .upi-app-btn:hover {
+            border-color: #3399cc;
+            background: #f8fbfd;
+        }
+        
+        .upi-app-btn img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .pay-razorpay-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #3399cc 0%, #2288bb 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(51, 153, 204, 0.3);
+            margin-top: 20px;
+        }
+        
+        .pay-razorpay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(51, 153, 204, 0.4);
+        }
+        
+        .pay-razorpay-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .razorpay-info {
+            background: #f0f7ff;
+            border: 1px solid #3399cc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        
+        .razorpay-info i {
+            color: #3399cc;
+            margin-right: 8px;
+        }
         .checkout-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -537,19 +650,27 @@
                         
         <!-- Payment Details -->
                         <div id="upiDetails" class="payment-details-box">
-                            <h4><i class="fas fa-qrcode"></i> Scan to Pay ₹499</h4>
-                            <p>Scan the QR code with any UPI app - amount will be auto-filled</p>
-                            <div class="upi-details">
-                                <div style="margin: 20px 0;">
-                                    <img id="upiQRCode" src="" alt="UPI QR Code" style="width: 180px; height: 180px; display: block; margin: 0 auto;">
+                            <h4><i class="fas fa-qrcode"></i> Pay ₹499 via UPI</h4>
+                            
+                            <!-- Razorpay UPI Payment Button -->
+                            <button type="button" id="razorpayUpiBtn" class="pay-razorpay-btn" onclick="payWithRazorpayUPI()">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span class="razorpay-logo">Pay ₹499</span> with UPI
+                            </button>
+                            
+                            <div class="razorpay-info">
+                                <p><i class="fas fa-info-circle"></i> Secure payment powered by Razorpay</p>
+                                <p style="margin-top: 8px;">Accepts all UPI apps: Google Pay, PhonePe, BHIM, Paytm, etc.</p>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #ddd;">
+                                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Or scan QR code with any UPI app:</p>
+                                <div style="margin: 15px 0;">
+                                    <img id="upiQRCode" src="" alt="UPI QR Code" style="width: 150px; height: 150px; display: block; margin: 0 auto; border-radius: 10px;">
                                 </div>
-                                <p style="font-size: 1.5rem; font-weight: 700; color: #2d5a27; margin: 10px 0;">₹499</p>
-                                <p style="color: #28a745; font-size: 0.9rem;">Amount will be automatically pre-filled</p>
-                                <p class="upi-id" style="margin-top: 15px;">saibalajisinghrajput@oksbi</p>
-                                <p style="color: #888; font-size: 0.85rem; margin-top: 10px;">
-                                    <i class="fas fa-mobile-alt" style="color: #2d5a27;"></i> 
-                                    Just scan and enter PIN to pay
-                                </p>
+                                <p style="font-size: 1.3rem; font-weight: 700; color: #2d5a27;">₹499</p>
+                                <p style="color: #28a745; font-size: 0.85rem;">Amount auto-filled when scanned</p>
+                                <p class="upi-id" style="margin-top: 10px;">saibalajisinghrajput@oksbi</p>
                             </div>
                         </div>
                         
@@ -861,6 +982,147 @@ Please confirm this order and share payment details`;
                         </svg>
                     `);
                 };
+            }
+        }
+        
+        // Razorpay UPI Payment
+        function payWithRazorpayUPI() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            // Validate form
+            if (!name || !email || !phone) {
+                alert('Please fill in all required fields before making payment.');
+                document.getElementById('name').focus();
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            // Phone validation (Indian phone number)
+            const phoneRegex = /^[6-9]\d{9}$/;
+            if (!phoneRegex.test(phone.replace(/\D/g, ''))) {
+                alert('Please enter a valid 10-digit phone number.');
+                document.getElementById('phone').focus();
+                return;
+            }
+            
+            const orderId = 'ORD-' + Date.now();
+            
+            const options = {
+                key: RAZORPAY_KEY_ID,
+                amount: 49900, // Amount in paise (₹499 = 49900 paise)
+                currency: 'INR',
+                name: 'SCALP MAX',
+                description: 'Payment for SCALP MAX Anti Dandruff Shampoo',
+                image: 'product-image.png',
+                order_id: orderId,
+                handler: function(response) {
+                    // Payment successful
+                    console.log('Payment successful:', response);
+                    
+                    // Save order to Supabase
+                    saveOrderWithPayment(response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature);
+                },
+                prefill: {
+                    name: name,
+                    email: email,
+                    contact: phone
+                },
+                notes: {
+                    address: document.getElementById('address').value + ', ' + 
+                             document.getElementById('city').value + ', ' + 
+                             document.getElementById('state').value + ' - ' + 
+                             document.getElementById('pincode').value
+                },
+                theme: {
+                    color: '#2d5a27'
+                },
+                method: {
+                    upi: true
+                }
+            };
+            
+            // Check if Razorpay is loaded
+            if (typeof Razorpay === 'undefined') {
+                alert('Payment system is loading. Please try again in a few seconds.');
+                return;
+            }
+            
+            const rzp1 = new Razorpay(options);
+            
+            rzp1.on('payment.failed', function(response) {
+                console.log('Payment failed:', response.error);
+                alert('Payment failed: ' + response.error.description);
+            });
+            
+            rzp1.open();
+        }
+        
+        // Save order with payment details
+        async function saveOrderWithPayment(paymentId, razorpayOrderId, signature) {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            
+            const now = new Date();
+            const orderId = 'ORD-' + Date.now();
+            
+            const orderData = {
+                order_id: orderId,
+                razorpay_order_id: razorpayOrderId,
+                razorpay_payment_id: paymentId,
+                razorpay_signature: signature,
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                quantity: '1',
+                total: '499',
+                payment: 'UPI (Razorpay)',
+                status: 'paid',
+                created_at: now.toISOString()
+            };
+            
+            console.log('Saving order with payment:', orderData);
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('orders')
+                    .insert(orderData);
+                
+                if (error) {
+                    console.error('Supabase error:', error);
+                }
+                
+                localStorage.setItem('lastOrderId', orderId);
+                localStorage.setItem('paymentMethod', 'UPI');
+                localStorage.setItem('paymentId', paymentId);
+                
+                // Redirect to thank you page
+                window.location.href = 'thank-you.html';
+            } catch (err) {
+                console.error('Error saving order:', err);
+                
+                // Still redirect even if Supabase fails
+                localStorage.setItem('lastOrderId', orderId);
+                localStorage.setItem('paymentMethod', 'UPI');
+                localStorage.setItem('paymentId', paymentId);
+                window.location.href = 'thank-you.html';
             }
         }
     </script>
